@@ -1,5 +1,13 @@
 # GHC language extensions
 
+### Abstract
+
+Language extensions are everywhere in the modern Haskell world. As beginners we are often told by instructors or the compiler itself to enable particular extensions to allow for some syntactic sugar or enable a feature. However, the compiler isn't always right, and language extensions may come with risks or penalties we are not aware of.
+
+Furthermore, there are over 100 language extensions.
+
+In this talk, Andrew aims to explore the world of
+
 ### Category
 
 Language
