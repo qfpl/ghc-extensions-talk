@@ -27,3 +27,9 @@
 *** ~FlexibleContexts~
 *** ~MultiParameterTypeClasses~
 *** ~UndecidableInstances~
+** References
+[[https://gist.github.com/rwbarton/dd8e51dce2a262d17a80][Flexible instances breaking things]]
+
+[[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/lang.html][GHC user guide]]
+
+[[https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-19100012.3][Haskell 2010 report]]
