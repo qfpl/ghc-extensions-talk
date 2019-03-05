@@ -1,0 +1,29 @@
+* GHC Language extensions
+** High level
+*** Part 1 --- Intro
+**** What are language extensions?
+**** Why are they necessary?
+     - Haskell has a standard.
+     - Compilers can extend the language features in the standard.
+**** How do we use them?
+     - Pragmas per file
+     - Cabal file
+     - command line
+     - GHCi
+*** Part 2 --- Basic examples
+*** Part 3 --- Type classes
+** Basic examples
+*** ~InstanceSigs~
+*** ~OverloadedStrings~
+*** ~ScopedTypeVariables~
+*** ~MultiWayIf~
+*** ~LambdaCase~
+*** ~TupleSections~
+*** ~RecordWildCards~
+*** ~GeneralizedNewtypeDeriving~
+*** ~EmptyDataDeclarations~ for phantom types?
+** Type class examples
+*** ~FlexibleInstances~
+*** ~FlexibleContexts~
+*** ~MultiParameterTypeClasses~
+*** ~UndecidableInstances~
