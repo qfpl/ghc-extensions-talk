@@ -22,7 +22,9 @@ talk
 
 ### Target audience
 
-Haskell users who want to get exposed to language extensions they may not be familiar with, or who want a deeper understanding of the language extensions they already know and use.
+People familiar with Haskell, but who haven't yet used it on larger projects will benefit from at least the first part of the talk.
+
+Intermediate or advanced Haskell users who want to get exposed to language extensions they may not be familiar with, or who want a deeper understanding of the language extensions they already know and use, will get the most out of the latter parts.
 
 ### Session prerequisite
 
