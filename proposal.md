@@ -2,9 +2,11 @@
 
 ### Abstract
 
-Language extensions are everywhere in the modern Haskell world. As beginners we are often told by instructors or the compiler itself to enable particular extensions to allow for some syntactic sugar or enable a common feature. If we continue to use Haskell, we likely come to depend on even more language extensions, until it is common place for the first 10 lines of each file to be language pragmas. Many of us, myself included, are probably guilty of enabling extensions without fully understanding what they do, or understanding what tradeoffs and risks they might present. I'd like to do better.
+Language extensions are everywhere in the modern Haskell world. As beginners we are often told by instructors or the compiler itself to enable particular extensions to allow for some syntactic sugar or enable a common feature. If we continue to use Haskell, we likely come to depend on even more language extensions, until it is common place for the first 10 lines of each file to be language pragmas. Many of us, myself included, are probably guilty of enabling extensions without fully understanding what they do, or understanding what tradeoffs and risks they might present. This talk hopes to improve the situation by shedding some light on commonly used extensions.
 
-We'll start with what language extensions are, and the different ways they may be enabled. From there, we'll look at some of the simpler extensions that give us some syntactic sugar. Next we'll look at some heavier weight extensions, including those commonly used to alter the type class mechanism. There are over 100 language extensions supported by GHC 8.6, so it is not my intention to cover all or even most of them. Instead, our focus will be extensions that are commonly used, their motivation, their use, and any risks/tradeoffs they present.
+We'll start with what language extensions are and why they exist. Next we'll consider the different ways they may be enabled. From there, we'll look at some of the simpler extensions that provide syntactic sugar and not much else. At this point we'll start to ramp up and look at some heavier weight extensions, their use cases, and their tradeoffs. Finally, we'll take a more detailed look at some language extensions related to type classes.
+
+There are over 100 language extensions supported by GHC 8.6, so it is not my intention to cover all or even most of them. Instead, I hope to explain and demystify some common language extensions and point out that they are not without risks.
 
 ### Category
 
@@ -30,7 +32,7 @@ A basic knowledge of Haskell is expected. The talk progresses from things a novi
 
 The talk progresses from beginner-friendly material through to topics aimed at an intermediate or advanced Haskell user. The intention is that the beginner material is covered quickly for completeness, and the majority of the talk is spent looking at the details and tradeoffs related to a handful of common extensions.
 
-A high level outline for the talk is as follows. Note that the extensions included may change depending on time available, and what further research uncovers.
+A high level outline for the talk is as follows. Note that the extensions included may change depending on time available, and what further research uncovers. 
 
 - What are language extensions?
 - How are language extensions enabled?
@@ -55,11 +57,11 @@ A high level outline for the talk is as follows. Note that the extensions includ
    + FlexibleContexts
    + UndecidableInstances
    
-For each language extension covered, motivation and usage examples will be covered. Risks and tradeoffs will also be uncovered as appropriate.
+For each language extension, its use case and usage examples will be covered. Risks and tradeoffs will also be covered as appropriate.
 
 ### Learning outcomes
 
-Attendees will come away with an awareness of some commonly used language extensions, as well as an understanding of what problems they solve, and what risks and tradeoffs they come with.
+Attendees will come away with an awareness of some commonly used language extensions, as well as an understanding of what problems they solve, and what risks and tradeoffs they come with. Most importantly, the use cases and risks of some common extensions related to type classes will examined.
 
 ### Links
 
