@@ -55,6 +55,7 @@ A high level outline for the talk is as follows. Note that the extensions includ
    + MultiParamTypeClasses
    + FlexibleInstances
    + FlexibleContexts
+   + FunctionalDependencies
    + UndecidableInstances
    
 For each language extension, its use case and usage examples will be covered. Risks and tradeoffs will also be covered as appropriate.
