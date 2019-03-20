@@ -33,3 +33,12 @@
 [[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/lang.html][GHC user guide]]
 
 [[https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-19100012.3][Haskell 2010 report]]
+
+[[https://limperg.de/ghc-extensions/][Guide to GHC extensions with lots of great links]]
+
+[[https://ocharles.org.uk/pages/2014-12-01-24-days-of-ghc-extensions.html][OCharles' 24 days of GHC Extensions]]
+ - MPTC section is good --- highlights lack of inference information (leads to FunDeps).
+
+[[http://www.cse.chalmers.se/~hallgren/Papers/wm01.html][Fun with functional dependencies paper]]
+
+[[http://okmij.org/ftp/Haskell/HList-ext.pdf][Strongly typed heterogenous collections paper]]
