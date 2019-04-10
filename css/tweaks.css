@@ -29,3 +29,8 @@ div.no-bullets li {
 div.left-align {
     text-align: left;
 }
+
+div.left {
+    text-align: left;
+    font-size: 0.8em;
+}
