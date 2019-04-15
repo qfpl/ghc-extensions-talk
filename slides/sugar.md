@@ -2,7 +2,7 @@
 
 ## `OverloadedStrings`
 
-::: {class="left fragment fade-in-then-semi-out"}
+::: {class="left"}
 Enable overloaded string literals via the `IsString` type class.
 :::
 
@@ -35,6 +35,27 @@ Enable overloaded string literals via the `IsString` type class.
 </code></pre>
 
 ## `TupleSections`
+
+::: {class="left"}
+Allow partially applied tuple constructors.
+:::
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out">-- Replace this
+\x -> (x,True)
+</span>
+<span class="fragment fade-in-then-semi-out">-- With this
+(,True)
+</span>
+</code></pre>
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+(,True,,,42::Int,)<span class="fragment fade-in"> :: a -> b -> c -> d -> (a,Bool,b,c,Int,d)</span>
+</code></pre>
 
 ## `InstanceSigs`
 
