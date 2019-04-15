@@ -59,6 +59,18 @@ Allow partially applied tuple constructors.
 
 ## `InstanceSigs`
 
+::: {class="left"}
+Allow type signatures for definitions of instance members.
+:::
+
+##
+
+```haskell
+instance Traversable (Compose f g)
+  traverse :: (a -> h b) -> Compose f g a -> h (Compose f g b)
+  traverse = _ -- help!
+```
+
 ## `LambdaCase`
 
 ## `MultiWayIf`
