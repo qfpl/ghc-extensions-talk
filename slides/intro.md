@@ -2,7 +2,6 @@
 
 ##
 
-::: {class="wider-code"}
 ```
 type-class-extensions.lhs:3:3: error:
     • Too many parameters for class ‘Foo’
@@ -12,7 +11,6 @@ type-class-extensions.lhs:3:3: error:
 3 | > class Foo a b where
   |   ^^^^^^^^^^^^^^^^^^^...
 ```
-:::
 
 ::: notes
  - Raise hands if you've seen an error like this before?
