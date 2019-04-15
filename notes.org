@@ -42,3 +42,7 @@
 [[http://www.cse.chalmers.se/~hallgren/Papers/wm01.html][Fun with functional dependencies paper]]
 
 [[http://okmij.org/ftp/Haskell/HList-ext.pdf][Strongly typed heterogenous collections paper]]
+
+[[https://www.haskell.org/cabal/users-guide/developing-packages.html?highlight=extensions#pkg-field-default-extensions][Cabal docs on default-extensions]]
+
+[[https://www.haskell.org/onlinereport/decls.html#sect4.3.4][defaulting rules (relevant to ~OverloadedStrings~)]]
