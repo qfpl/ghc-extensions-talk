@@ -65,12 +65,48 @@ Allow type signatures for definitions of instance members.
 
 ##
 
-```haskell
-instance Traversable (Compose f g)
-  traverse :: (a -> h b) -> Compose f g a -> h (Compose f g b)
-  traverse = _ -- help!
-```
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance Traversable (Compose f g)</span>
+  <span class="fragment fade-in" data-fragment-index="2">traverse :: (a -> h b) -> Compose f g a -> h (Compose f g b)</span>
+  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">traverse = undefined</span>
+</code></pre>
 
 ## `LambdaCase`
 
+::: {class="left"}
+Adds syntactic sugar for pattern matching on a function's argument.
+:::
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+pretty ::
+  -> Expr
+  -> Text
+pretty <span class="fragment highlight-red">e = case e of</span>
+  LitI n -> pack $ show n
+  LitB True -> "true"
+  LitB False -> "false"
+</code></pre>
+
+##
+
+```haskell
+pretty ::
+  -> Expr
+  -> Text
+pretty = \case
+  LitI n -> pack $ show n
+  LitB True -> "true"
+  LitB False -> "false"
+```
+
 ## `MultiWayIf`
+
+::: {class="left"}
+Adds syntactic sugar for nested `if-then-else` expressions.
+:::
+
+##
+
+
