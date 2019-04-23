@@ -34,3 +34,21 @@ div.left {
     text-align: left;
     font-size: 0.8em;
 }
+
+/* Something that fades IN with no layout should have `display: none` until it's the current fragment */
+.reveal .slides section .fragment.no-layout {
+    display: none;
+}
+
+.reveal .slides section .fragment.current-fragment.no-layout {
+    display: inherit;
+}
+
+/* Something that fades OUT with no layout should display normally until it's the current fragment */
+.reveal .slides section .fragment.fade-out.no-layout {
+    display: inherit;
+}
+
+.reveal .slides section .fragment.fade-out.current-fragment.no-layout {
+    display: none;
+}
