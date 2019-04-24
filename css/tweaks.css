@@ -40,13 +40,13 @@ div.left {
     display: none;
 }
 
-.reveal .slides section .fragment.current-fragment.no-layout {
-    display: inherit;
+.reveal .slides section span.fragment.current-fragment.no-layout {
+    display: inline;
 }
 
 /* Something that fades OUT with no layout should display normally until it's the current fragment */
-.reveal .slides section .fragment.fade-out.no-layout {
-    display: inherit;
+.reveal .slides section span.fragment.fade-out.no-layout {
+    display: inline;
 }
 
 .reveal .slides section .fragment.fade-out.current-fragment.no-layout {
