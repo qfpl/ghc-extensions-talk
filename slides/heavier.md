@@ -116,9 +116,58 @@ defaultConferenceAttendee</span> <span class="fragment" data-fragment-index="2">
 
 ##
 
+<pre class="haskell"><code data-trim data-noescape>
+personName ::
+  Person
+  -> Text
+personName Person{firstName, surname} =
+  firstName <> " " <> surname
+</code></pre>
 
+##
+
+::: {.left}
+Improvements
+
+ - Only bring into scope what we need.
+ - Clear where fields come from.
+:::
 
 ## `ScopedTypeVariables`
+
+::: {.left}
+Scope type variables to the lexical scope of their associated expressions.
+:::
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">f ::
+  [a] -> [a]
+f xs =
+  ys ++ ys
+  where</span>
+    <span class="fragment" data-fragment-index="1">ys :: [a]</span><span class="fragment" data-fragment-index="2"> </span>
+    <span class="fragment fade-in-then-semi-out" data-fragment-index="1">ys = reverse xs</span>
+</code></pre>
+
+##
+
+### TODO: highlighting/animation
+
+<pre><code class="nohighlight" data-trim data-noescape>
+Couldn't match type ‘a’ with ‘a1’
+‘a’ is a rigid type variable bound by
+  the type signature for:
+    f :: forall a. [a] -> [a]
+  at examples/ScopedTypeVariables.hs:(5,1)-(6,12)
+‘a1’ is a rigid type variable bound by
+  the type signature for:
+    ys :: forall a1. [a1]
+  at examples/ScopedTypeVariables.hs:10:5-13
+Expected type: [a1]
+  Actual type: [a]
+</code></pre>
 
 ## `GeneralizedNewtypeDeriving`
 
