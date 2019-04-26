@@ -142,9 +142,9 @@ Scope type variables to the lexical scope of their associated expressions.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">f ::
-  [a] -> [a]
-f xs =
+<span class="fragment" data-fragment-index="1">f ::
+  [a] -> [a]</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">f xs =
   ys ++ ys
   where</span>
     <span class="fragment" data-fragment-index="1">ys :: [a]</span><span class="fragment" data-fragment-index="2"> </span>
@@ -169,6 +169,33 @@ Expected type: [a1]
   Actual type: [a]
 </code></pre>
 
-## `GeneralizedNewtypeDeriving`
+## `GeneralisedNewtypeDeriving`
 
+::: {.left}
+Derive instances for `newtype`s based on the type they wrap.
+:::
 
+##
+
+<pre><code class="haskell" data-trim data-noescape>
+{-# LANGUAGE GeneralisedNewtypeDeriving #-}
+
+class Pretty a where
+  pretty :: a -> Text
+
+instance Pretty Int where
+  pretty = pack . show
+
+newtype Age = Age Int
+  deriving (Show, Pretty)
+</code></pre>
+
+##
+
+<pre><code class="nohighlight" data-trim data-noescape>
+Can't make a derived instance of ‘Pretty Age’:
+  ‘Pretty’ is not a stock derivable class (Eq, Show, etc.)
+  Try GeneralizedNewtypeDeriving for GHC's newtype-deriving extension
+</code></pre>
+```
+```
