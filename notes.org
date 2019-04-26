@@ -46,3 +46,7 @@
 [[https://www.haskell.org/cabal/users-guide/developing-packages.html?highlight=extensions#pkg-field-default-extensions][Cabal docs on default-extensions]]
 
 [[https://www.haskell.org/onlinereport/decls.html#sect4.3.4][defaulting rules (relevant to ~OverloadedStrings~)]]
+
+[[https://gitlab.haskell.org/ghc/ghc/wikis/roles][Roles in GHC wiki]]
+
+[[https://augustss.blogspot.com/2014/12/its-time-for-some-more-haskell-opinions.html][Augustss opinions on extensions]]
