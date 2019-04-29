@@ -178,8 +178,6 @@ Derive instances for `newtype`s based on the type they wrap.
 ##
 
 <pre><code class="haskell" data-trim data-noescape>
-{-# LANGUAGE GeneralisedNewtypeDeriving #-}
-
 class Pretty a where
   pretty :: a -> Text
 
@@ -197,5 +195,25 @@ Can't make a derived instance of ‘Pretty Age’:
   ‘Pretty’ is not a stock derivable class (Eq, Show, etc.)
   Try GeneralizedNewtypeDeriving for GHC's newtype-deriving extension
 </code></pre>
-```
-```
+
+##
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment" data-fragment-index="2"><mark>{-# LANGUAGE GeneralisedNewtypeDeriving #-}</mark></span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Pretty a where
+  pretty :: a -> Text
+
+instance Pretty Int where
+  pretty = pack . show
+
+newtype Age = Age Int
+  deriving (Show, Pretty)</span>
+</code></pre>
+
+##
+
+Something to be mindful of: GeneralisedNewtypeDeriving doesn't generate instances.
+
+##
+
