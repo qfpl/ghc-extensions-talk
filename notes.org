@@ -50,3 +50,5 @@
 [[https://gitlab.haskell.org/ghc/ghc/wikis/roles][Roles in GHC wiki]]
 
 [[https://augustss.blogspot.com/2014/12/its-time-for-some-more-haskell-opinions.html][Augustss opinions on extensions]]
+
+[[https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/][ryanglscott on GND, ~join~, roles, etc]]
