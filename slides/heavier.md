@@ -213,7 +213,125 @@ newtype Age = Age Int
 
 ##
 
-Something to be mindful of: GeneralisedNewtypeDeriving doesn't generate instances.
+`GeneralisedNewtypeDeriving` has some interesting history that led to the introduction of roles to
+the language.
+
+::: {.notes}
+ - Before roles, newtypes could cause seg faults in some special circumstances.
+ - Focusing on current implementation that fixes that problem.
+:::
 
 ##
 
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Pretty a where
+  pretty :: a -> Text
+
+instance Pretty Int where
+  pretty = pack . show
+
+newtype Age = Age Int
+  deriving </span><span class="fragment" data-fragment-index="1">(Show)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> </span>
+  
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">instance Pretty Age where
+  pretty = </span><span class="fragment" data-fragment-index="3">coerce</span><span class="fragment fade-in-then-semi-out" data-fragment-index="3"> (pack . show)</span><span class="fragment" data-fragment-index="4"></span>
+</code></pre>
+
+##
+
+```haskell
+coerce :: Coercible a b => a -> b
+
+class Coercible a b
+
+instance Coercible a a
+
+newtype Age = Age Int
+
+instance Coercible a Int => Coercible a Age
+instance Coercible Int b => Coercible Age b
+```
+
+::: {.notes}
+- Coercible instances tell the type checker that two types have the same representation.
+   + same bit pattern in memory
+- Programmers cannot create instances of `Coercible`.
+- This is just a view that is familiar to programmers.
+:::
+
+##
+
+The roles that bind us.
+
+##
+
+### TODO: examples of why IdentityT is a useful thing
+
+```haskell
+-- We can do this
+newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative, Monad)
+
+-- We can't do this
+class Monad' m where
+  join :: m (m a) -> m a
+
+newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative, Monad')
+```
+
+##
+
+```
+    • Couldn't match representation of type ‘m (IdentityT m a)’
+                               with that of ‘m (m a)’
+        arising from the coercion of the method ‘join’
+          from type ‘forall a. m (m a) -> m a’
+            to type ‘forall a. IdentityT m (IdentityT m a) -> 
+IdentityT m a’
+      NB: We cannot know what roles the parameters to ‘m’ have;
+        we must assume that the role is nominal
+    • When deriving the instance for (Monad' (IdentityT m))
+   |
+43 |   deriving (Functor, Applicative, Monad')
+   |                                   ^^^^^^
+```
+
+##
+
+```haskell
+class Monad' m where
+  join :: m (m a) -> m a
+
+newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative)
+  
+instance Monad' m => Monad' (IdentityT m) where
+  join :: IdentityT m (IdentityT m a) -> IdentityT m a
+  join = coerce (join :: m (m a) -> m a)
+
+-- have
+instance Coercible (m a) b => Coercible (IdentityT m a) b
+instance Coercible b (m a) => Coercible b (IdentityT m a)
+
+-- need
+instance Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)
+
+That implies the following constraints (required by Coercible instance for functions?):
+  Coercible (m a) (Identity m a)
+  Coercible (m (m a)) (IdentityT m (IdentityT m a))
+  
+First one trivial given newtype wrapper.
+
+Second one fails. Can get to `Coercible (m (m a)) (m (IdentityT m a))` by unwrapping the outer IdentityT.
+However, `m` is unconstrained and could be a type family or something such that its parameters must be
+nominally equal for equality to hold. We have no witness for this!
+
+SIDE NOTE: quantified constraints allow us to constrain instances such that `m` has to have representational
+type parameters.
+
+```
+
+::: {.notes}
+
+:::

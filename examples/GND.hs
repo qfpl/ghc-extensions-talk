@@ -1,10 +1,12 @@
-{-# LANGUAGE RoleAnnotations #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE GeneralisedNewtypeDeriving #-}
+-- {-# LANGUAGE RoleAnnotations #-}
+-- {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module GND where
 
-import Data.Text (Text, pack)
+import Control.Applicative (Applicative)
+import Data.Set
+-- import Data.Text (Text, pack)
 
 -- data family Z :: * -> *
 
@@ -21,11 +23,52 @@ import Data.Text (Text, pack)
 
 -- main = case isInt (ZI 4.0) of ZM tu -> print tu
 
-class Pretty a where
-  pretty :: a -> Text
+-- class Pretty a where
+--   pretty :: a -> Text
 
-instance Pretty Int where
-  pretty = pack . show
+-- instance Pretty Int where
+--   pretty = pack . show
 
-newtype Age = Age Int
-  deriving (Show, Pretty)
+-- newtype Age = Age Int
+--   deriving (Show, Pretty)
+
+class Applicative m => Monad' m where
+  join :: m (m a) -> m a
+
+-- instance Monad' Maybe where
+--   join Nothing = Nothing
+--   join (Just ma) = ma
+
+newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative, Monad')
+
+-- instance Monad' (IdentityT m) where
+--   join = coerce (join :: m (m a) -> m a)
+
+
+--------------------------------------------
+-- FROM TRAC BUG https://gitlab.haskell.org/ghc/ghc/issues/1496
+-- I DON'T THINK THIS IS RELEVANT OR IMPORTANT
+--------------------------------------------
+-- class IsoInt a where
+--     convFromInt :: item Int -> item a
+
+-- instance IsoInt Int where
+--     convFromInt = id
+
+-- newtype Down a = Down a deriving (Eq, Show, IsoInt)
+
+-- -- deriving instance IsoInt a => IsoInt (Down a)
+
+-- instance Ord a => Ord (Down a) where
+--     compare (Down a) (Down b) = compare b a
+
+-- asSetDown :: Set (Down Int) -> Set (Down Int)
+-- asSetDown = id
+
+-- a1 = toAscList . asSetDown . convFromInt . fromAscList $  [0..10]
+-- a2 = toAscList . asSetDown . fromAscList . reverse . convFromInt $ [0..10]
+
+-- main = do
+--     print a1
+--     print a2
