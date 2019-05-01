@@ -1,5 +1,5 @@
 -- {-# LANGUAGE RoleAnnotations #-}
--- {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module GND where
@@ -39,8 +39,23 @@ class Applicative m => Monad' m where
 --   join Nothing = Nothing
 --   join (Just ma) = ma
 
+data Foo = Foo
+
+data TF a where
+  TMaybeInt :: Maybe Int -> TF Foo
+  TFoo :: TF Foo -> TF (Either String Int)
+  -- TF (IdentityT Maybe Int) = IO String
+
 newtype IdentityT m a = IdentityT (m a)
-  deriving (Functor, Applicative, Monad')
+  deriving (Functor, Applicative, Monad)
+
+foo =
+  let
+    a = IdentityT (TMaybeInt (Just 12)) :: IdentityT TF Foo
+    b = IdentityT (TFoo (IdentityT (TMaybeInt (Just 12)))) :: IdentityT TF (IdentityT TF Foo)
+    --b = IdentityT (IdentityT (Just 12)) :: IdentityT TF (IdentityT TF Foo)
+  in
+    undefined
 
 -- instance Monad' (IdentityT m) where
 --   join = coerce (join :: m (m a) -> m a)
