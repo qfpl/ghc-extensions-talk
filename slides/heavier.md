@@ -63,22 +63,7 @@ Can't make a derived instance of ‘Pretty Age’:
   Try GeneralizedNewtypeDeriving for GHC's newtype-deriving extension
 </code></pre>
 
-##
-
-<pre><code class="haskell" data-trim data-noescape>
-<span class="fragment" data-fragment-index="2"><mark>{-# LANGUAGE GeneralisedNewtypeDeriving #-}</mark></span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Pretty a where
-  pretty :: a -> Text
-
-instance Pretty Int where
-  pretty = pack . show
-
-newtype Age = Age Int
-  deriving (Show, Pretty)</span>
-</code></pre>
-
-##
+## Roles
 
 ::: {.left}
 `GeneralisedNewtypeDeriving` as it was originally implemented had some issues that resulted in **roles** being added to the language.
@@ -86,6 +71,12 @@ newtype Age = Age Int
 - nominal
 - representational
 - phantom
+:::
+
+::: {.notes}
+ - Before roles, newtypes could cause seg faults in some special circumstances.
+    + Mixing nominal and representational equality to convince GHC that two types had representational equality when they didn't.
+ - Focusing on current implementation that fixes that problem.
 :::
 
 ## Nominal equality
@@ -119,6 +110,13 @@ Two types that have the same machine representation are equal.
 <span class="fragment">coerce :: Coercible a b => a -> b</span>
 </code></pre>
 
+::: {.notes}
+- Coercible instances tell the type checker that two types have the same representation.
+   + same bit pattern in memory
+- Programmers cannot create instances of `Coercible`.
+- This is just a view that is familiar to programmers.
+:::
+
 ##
 
 <pre><code class="haskell" data-trim data-noescape>
@@ -133,7 +131,22 @@ Coercible [Age] [Int]</span>
 <span class="fragment">Coercible (Int -> Int) (Age -> Age)</span>
 </code></pre>
 
-##
+## Phantom equality
+
+::: {.left}
+Phantom types cannot change representational equality, so any two types are phantom equal.
+:::
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data Foo </span><span class="fragment" data-fragment-index="1">a</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1"> = Foo</span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">Foo Int ~<sub>P</sub> Foo Bool</span>
+</code></pre>
+
+::: {.notes}
+- Phantom equality is a convenience for talking about representational equality.
+- This isn't necessary for type soundness.
+:::
 
 ##
 
@@ -151,36 +164,7 @@ newtype Age = Age Int
   pretty = </span><span class="fragment" data-fragment-index="2">coerce</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> (pack . show)</span><span class="fragment" data-fragment-index="3"></span>
 </code></pre>
 
-::: {.notes}
- - Before roles, newtypes could cause seg faults in some special circumstances.
- - Focusing on current implementation that fixes that problem.
-:::
-
-##
-
-```haskell
-coerce :: Coercible a b => a -> b
-
-class Coercible a b
-
-instance Coercible a a
-
-newtype Age = Age Int
-
-instance Coercible a Int => Coercible a Age
-instance Coercible Int b => Coercible Age b
-```
-
-::: {.notes}
-- Coercible instances tell the type checker that two types have the same representation.
-   + same bit pattern in memory
-- Programmers cannot create instances of `Coercible`.
-- This is just a view that is familiar to programmers.
-:::
-
-##
-
-The roles that bind us.
+## The roles that bind us
 
 ##
 
@@ -210,24 +194,26 @@ The roles that bind us.
 IdentityT m a’
       NB: We cannot know what roles the parameters to ‘m’ have;
         we must assume that the role is nominal
-    • When deriving the instance for (Monad' (IdentityT m))
+    • When deriving the instance for (MonadJoin (IdentityT m))
    |
-43 |   deriving (Functor, Applicative, Monad')
-   |                                   ^^^^^^
+43 |   deriving (Functor, Applicative, MonadJoin)
+   |                                   ^^^^^^^^^
 ```
 
 ##
 
-```haskell
-class Monad' m where
-  join :: m (m a) -> m a
-
-newtype IdentityT m a = IdentityT (m a)
-  deriving (Functor, Applicative)
-  
-instance Monad' m => Monad' (IdentityT m) where
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance MonadJoin m => MonadJoin (IdentityT m) where
   join :: IdentityT m (IdentityT m a) -> IdentityT m a
-  join = coerce (join :: m (m a) -> m a)
+  join = </span><span class="fragment" data-fragment-index="1">(coerce :: )</span> (join :: m (m a) -> m a)</span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">-- Must satisfy
+Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)</span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">-- Implies
+Coercible (m (m a)) (IdentityT m (IdentityT m a))</span>
+
+Coercible (m (m a)) (m (IdentityT m a))
 
 -- have
 instance Coercible (m a) b => Coercible (IdentityT m a) b
@@ -248,9 +234,4 @@ nominally equal for equality to hold. We have no witness for this!
 
 SIDE NOTE: quantified constraints allow us to constrain instances such that `m` has to have representational
 type parameters.
-
-```
-
-::: {.notes}
-
-:::
+</code></pre>
