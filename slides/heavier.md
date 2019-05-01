@@ -1,138 +1,5 @@
 # Heavyweight {data-background="images/muhammad-ali.jpg"}
 
-## `RecordWildCards`
-
-::: {.left}
-Elide fields from record construction and pattern matching.
-:::
-
-##
-
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment" data-fragment-index="4">{-# LANGUAGE RecordWildCards #-}</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data Person =
-  Person {
-    firstName :: Text
-  , surname   :: Text
-  , height    :: Integer
-  }</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">greetPerson ::
-  Person
-  -> Text
-greetPerson </span><span class="fragment" data-fragment-index="2"><span class="fragment highlight-red" data-fragment-index="3"><span class="fragment fade-out no-layout" data-fragment-index="5">Person{firstName = firstName, surname = surname, height = height}</span></span></span><span class="fragment no-layout" style="color: red" data-fragment-index="5">Person{..}</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> =
-  let
-    heightDescriptor = bool "short" "tall" $ height &:gt; 180
-  in
-       "Hi, " <> firstName <> " " <> surname <> ". Aren't you "
-    <> heightDescriptor <> "!"</span>
-</code></pre>
-
-##
-
-<pre class="haskell"><code data-trim data-noescape>
-{-# LANGUAGE RecordWildCards   #-}
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data ConferenceAttendee =
-  ConferenceAttendee {
-    confFirstName :: Text
-  , confSurname   :: Text
-  , confHeight    :: Integer
-  , confShirtSize :: ShirtSize
-  }</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">defaultConferenceAttendee ::
-  Person
-  -> ConferenceAttendee
-defaultConferenceAttendee Person{..} =
-  let
-    confFirstName = firstName
-    confSurname = surname
-    confHeight = height</span>
-    <span class="fragment" data-fragment-index="3">confShirtSize = M</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="2">in</span>
-    <span class="fragment" data-fragment-index="4">ConferenceAttendee {..}</span>
-</code></pre>
-
-##
-
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE RecordWildCards   #-}</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">data ConferenceAttendee =
-  ConferenceAttendee {</span>
-    <span class="fragment fade-in-then-semi-out" data-fragment-index="3">firstName :: Text
-  , surname   :: Text
-  , height    :: Integer
-  , shirtSize :: ShirtSize</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="2">}</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="4">defaultConferenceAttendee ::
-  Person
-  -> ConferenceAttendee
-defaultConferenceAttendee</span> <span class="fragment" data-fragment-index="5">Person{..}</span> <span class="fragment fade-in-then-semi-out" data-fragment-index="4">=</span>
-  <span class="fragment" data-fragment-index="6">ConferenceAttendee {shirtSize = M, ..}</span>
-</code></pre>
-
-##
-
-::: {.left}
-Some problems with `RecordWildCards`
-
- - Unclear where variables come from.
- - All fields are brought into scope.
- - Vulnerable to changes in the record.
-:::
-
-::: {.notes}
-- Especially if record definition not in your code base.
-- Best to avoid unless you want all fields.
-- Added fields are brought into scope --- get a warning if shadowing at least.
-:::
-
-
-## `NamedFieldPuns`
-
-::: {.left}
-Remove some of the boilerplate when bringing record fields into scope.
-:::
-
-##
-
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">defaultConferenceAttendee ::
-  Person
-  -> ConferenceAttendee
-defaultConferenceAttendee</span> <span class="fragment" data-fragment-index="2">Person{firstName, surname, height}</span> <span class="fragment fade-in-then-semi-out" data-fragment-index="1">=</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">ConferenceAttendee
-  {</span> <span class="fragment fade-in-then-semi-out" data-fragment-index="3">confFirstName = firstName
-  , confSurname = surname
-  , confHeight = height
-  , confShirtSize = M</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">}</span>
-</code></pre>
-
-##
-
-<pre class="haskell"><code data-trim data-noescape>
-personName ::
-  Person
-  -> Text
-personName Person{firstName, surname} =
-  firstName <> " " <> surname
-</code></pre>
-
-##
-
-::: {.left}
-Improvements
-
- - Only bring into scope what we need.
- - Clear where fields come from.
-:::
-
 ## `ScopedTypeVariables`
 
 ::: {.left}
@@ -213,13 +80,60 @@ newtype Age = Age Int
 
 ##
 
-`GeneralisedNewtypeDeriving` has some interesting history that led to the introduction of roles to
-the language.
+::: {.left}
+`GeneralisedNewtypeDeriving` as it was originally implemented had some issues that resulted in **roles** being added to the language.
+
+- nominal
+- representational
+- phantom
+:::
+
+## Nominal equality
+
+::: {.left}
+Two types are nominally equal if they are the same type.
+:::
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment">Int ~ Int</span>
+<span class="fragment">Maybe Text ~ Maybe Text</span>
+<span class="fragment">forall a. [a] ~ [a]</span>
+</code></pre>
 
 ::: {.notes}
- - Before roles, newtypes could cause seg faults in some special circumstances.
- - Focusing on current implementation that fixes that problem.
+- Mostly what we think of when we think about equality of types in Haskell.
+- Used by `~` constraint.
 :::
+
+## Representational equality
+
+::: {.left}
+Two types that have the same machine representation are equal.
+
+<span class="fragment">`Coercible` constraint in Haskell denotes representational equality.</span>
+:::
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment">class Coercible a b</span>
+
+<span class="fragment">coerce :: Coercible a b => a -> b</span>
+</code></pre>
+
+##
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment">newtype Age = Age Int</span>
+
+<span class="fragment">Coercible Age Int
+Coercible Int Age</span>
+
+<span class="fragment">Coercible (Maybe Int) (Maybe Age)
+Coercible [Age] [Int]</span>
+
+<span class="fragment">Coercible (Int -> Int) (Age -> Age)</span>
+</code></pre>
+
+##
 
 ##
 
@@ -231,11 +145,16 @@ instance Pretty Int where
   pretty = pack . show
 
 newtype Age = Age Int
-  deriving </span><span class="fragment" data-fragment-index="1">(Show)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> </span>
+  deriving (Show)</span>
   
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">instance Pretty Age where
-  pretty = </span><span class="fragment" data-fragment-index="3">coerce</span><span class="fragment fade-in-then-semi-out" data-fragment-index="3"> (pack . show)</span><span class="fragment" data-fragment-index="4"></span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">instance Pretty Age where
+  pretty = </span><span class="fragment" data-fragment-index="2">coerce</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> (pack . show)</span><span class="fragment" data-fragment-index="3"></span>
 </code></pre>
+
+::: {.notes}
+ - Before roles, newtypes could cause seg faults in some special circumstances.
+ - Focusing on current implementation that fixes that problem.
+:::
 
 ##
 
@@ -265,20 +184,20 @@ The roles that bind us.
 
 ##
 
-### TODO: examples of why IdentityT is a useful thing
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative, </span><span class="fragment" data-fragment-index="1">Monad</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1">)</span><span class="fragment" data-fragment-index="2"></span>
+</code></pre>
 
-```haskell
--- We can do this
-newtype IdentityT m a = IdentityT (m a)
-  deriving (Functor, Applicative, Monad)
+##
 
--- We can't do this
-class Monad' m where
-  join :: m (m a) -> m a
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Applicative m => MonadJoin m where
+  join :: m (m a) -> m a</span>
 
-newtype IdentityT m a = IdentityT (m a)
-  deriving (Functor, Applicative, Monad')
-```
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">newtype IdentityT m a = IdentityT (m a)
+  deriving (Functor, Applicative, </span><span class="fragment" data-fragment-index="2">MonadJoin</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2">)</span><span class="fragment" data-fragment-index="3"></span>
+</code></pre>
 
 ##
 

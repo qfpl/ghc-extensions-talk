@@ -31,6 +31,7 @@ in
           $src/slides/intro.md \
           $src/slides/what-are-extensions.md \
           $src/slides/sugar.md \
+          $src/slides/records.md \
           $src/slides/heavier.md \
           $src/slides/references.md \
           > slides.md
