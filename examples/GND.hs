@@ -1,6 +1,8 @@
 -- {-# LANGUAGE RoleAnnotations #-}
+{-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving #-}
 
 module GND where
 
@@ -41,18 +43,42 @@ class Applicative m => Monad' m where
 
 data Foo = Foo
 
-data TF a where
-  TMaybeInt :: Maybe Int -> TF Foo
-  TFoo :: TF Foo -> TF (Either String Int)
+data Maybe' a where
+  Nothing' :: Maybe' a
+  Just' :: a -> Maybe' a
+  Just'' :: IdentityT Maybe a -> Int -> Maybe' a
   -- TF (IdentityT Maybe Int) = IO String
 
+deriving instance Show a => Show (Maybe' a)
+
+instance Functor Maybe' where
+  fmap f Nothing' = Nothing'
+  fmap f (Just' a) = Just' (f a)
+  fmap f (Just'' (IdentityT ma) n) = Just'' (IdentityT (fmap f ma)) n
+
+instance Applicative Maybe' where
+  pure = Just'
+
+  Nothing' <*> a = Nothing'
+
+  Just' _ <*> Nothing' = Nothing'
+  Just' f <*> Just' a = Just' $ f a
+  Just' f <*> Just'' ia n = Just'' (f <$> ia) n
+
+  Just'' _ _ <*> Nothing' = Nothing'
+  Just'' (IdentityT mf) n <*> (Just' a) = Just'' (IdentityT (mf <*> Just a)) n
+  Just'' imf n <*> Just'' ima n2 = Just'' (imf <*> ima) (n + n2)
+
+
 newtype IdentityT m a = IdentityT (m a)
-  deriving (Functor, Applicative, Monad)
+  deriving (Eq, Functor, Applicative, Monad, Show)
 
 foo =
   let
-    a = IdentityT (TMaybeInt (Just 12)) :: IdentityT TF Foo
-    b = IdentityT (TFoo (IdentityT (TMaybeInt (Just 12)))) :: IdentityT TF (IdentityT TF Foo)
+    a = IdentityT (TInt 12) :: IdentityT TF Foo
+    b = IdentityT (TFoo (IdentityT (TInt 12)) "hi") :: IdentityT TF (IdentityT TF Foo)
+
+    c = TFoo' (TMaybeInt (Just 12)) 42 :: TF (TF Foo)
     --b = IdentityT (IdentityT (Just 12)) :: IdentityT TF (IdentityT TF Foo)
   in
     undefined
