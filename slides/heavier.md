@@ -205,33 +205,24 @@ IdentityT m a’
 <pre><code class="haskell" data-trim data-noescape>
 <span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance MonadJoin m => MonadJoin (IdentityT m) where
   join :: IdentityT m (IdentityT m a) -> IdentityT m a
-  join = </span><span class="fragment" data-fragment-index="1">(coerce :: )</span> (join :: m (m a) -> m a)</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">-- Must satisfy
-Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">-- Implies
-Coercible (m (m a)) (IdentityT m (IdentityT m a))</span>
-
-Coercible (m (m a)) (m (IdentityT m a))
-
--- have
-instance Coercible (m a) b => Coercible (IdentityT m a) b
-instance Coercible b (m a) => Coercible b (IdentityT m a)
-
--- need
-instance Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)
-
-That implies the following constraints (required by Coercible instance for functions?):
-  Coercible (m a) (Identity m a)
-  Coercible (m (m a)) (IdentityT m (IdentityT m a))
+  join = </span><span class="fragment" data-fragment-index="1">coerce</span> (join :: m (m a) -> m a)</span>
   
-First one trivial given newtype wrapper.
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">coerce ::
+  Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)
+  => (m (m a) -> m a)
+  -> (IdentityT m (IdentityT m a) -> IdentityT m a)</span>
 
-Second one fails. Can get to `Coercible (m (m a)) (m (IdentityT m a))` by unwrapping the outer IdentityT.
-However, `m` is unconstrained and could be a type family or something such that its parameters must be
-nominally equal for equality to hold. We have no witness for this!
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">Coercible (m (m a)) (IdentityT m (IdentityT m a))</span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="4">Coercible (m (m a)) (m (IdentityT m a))</span>
+
+<span class="fragment fade-in-then-semi-out" data-fragment-index="5"><mark>m a ~<sub>R</sub> IdentityT m a</mark></span>
+</code></pre>
+
+::: {.notes}
+`m` is unconstrained and could be a type family or something such that its parameters must be
+nominally equal for equality to hold.
 
 SIDE NOTE: quantified constraints allow us to constrain instances such that `m` has to have representational
 type parameters.
-</code></pre>
+:::
