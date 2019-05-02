@@ -73,16 +73,6 @@ instance Applicative Maybe' where
 newtype IdentityT m a = IdentityT (m a)
   deriving (Eq, Functor, Applicative, Monad, Show)
 
-foo =
-  let
-    a = IdentityT (TInt 12) :: IdentityT TF Foo
-    b = IdentityT (TFoo (IdentityT (TInt 12)) "hi") :: IdentityT TF (IdentityT TF Foo)
-
-    c = TFoo' (TMaybeInt (Just 12)) 42 :: TF (TF Foo)
-    --b = IdentityT (IdentityT (Just 12)) :: IdentityT TF (IdentityT TF Foo)
-  in
-    undefined
-
 -- instance Monad' (IdentityT m) where
 --   join = coerce (join :: m (m a) -> m a)
 
