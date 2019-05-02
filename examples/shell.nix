@@ -1,8 +1,12 @@
-{nixpkgs ? import <nixpkgs> {}}:
+{nixpkgs ? import ./nixpkgs.nix}:
 
 let
   inherit (nixpkgs) pkgs;
+
+  gWithP = pkgs.haskell.packages.ghc864.ghcWithPackages (hp: with hp; [
+    checkers
+    ]);
 in
   pkgs.mkShell {
-    buildInputs = [pkgs.haskell.compiler.ghc864];
+    buildInputs = [gWithP];
   }
