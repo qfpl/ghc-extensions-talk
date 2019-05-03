@@ -205,18 +205,16 @@ IdentityT m a’
 <pre><code class="haskell" data-trim data-noescape>
 <span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance MonadJoin m => MonadJoin (IdentityT m) where
   join :: IdentityT m (IdentityT m a) -> IdentityT m a
-  join = </span><span class="fragment" data-fragment-index="1">coerce</span> (join :: m (m a) -> m a)</span>
+  join = </span><span class="fragment" data-fragment-index="1">coerce</span> <span class="fragment fade-in-then-semi-out" data-fragment-index="1">(join :: m (m a) -> m a)</span><span class="fragment" data-fragment-index="2"></span>
   
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">coerce ::
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">coerce ::
   Coercible (m (m a) -> m a) (IdentityT m (IdentityT m a) -> IdentityT m a)
   => (m (m a) -> m a)
   -> (IdentityT m (IdentityT m a) -> IdentityT m a)</span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">Coercible (m (m a)) (IdentityT m (IdentityT m a))</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="4">Coercible (m (m a)) (IdentityT m (IdentityT m a))</span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="4">Coercible (m (m a)) (m (IdentityT m a))</span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="5"><mark>m a ~<sub>R</sub> IdentityT m a</mark></span>
+<span class="fragment fade-out no-layout" data-fragment-index="6"><span class="fragment no-layout" data-fragment-index="5">Coercible (m (m a)) (m (IdentityT m a))</span></span><span class="fragment no-layout strikethrough" data-fragment-index="6">Coercible (m (m a)) (m (IdentityT m a))</span>
 </code></pre>
 
 ::: {.notes}

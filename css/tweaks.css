@@ -52,3 +52,7 @@ div.left {
 .reveal .slides section .fragment.fade-out.current-fragment.no-layout {
     display: none;
 }
+
+.strikethrough {
+    text-decoration: line-through;
+}
