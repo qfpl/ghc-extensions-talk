@@ -76,3 +76,27 @@ In short, it says that a type class instance must have the following form.
 </ul>
 :::
 
+## `MultiParamTypeClasses`
+
+::: {.left}
+Allows type classes with more than one type parameter.
+:::
+
+##
+
+```{.haskell .fragment}
+class Monad m => MonadReader r m where
+  ask :: m r
+  ...
+```
+
+::: {.fragment .left}
+_must_ be parameterised over exactly one type
+:::
+
+::: {.notes}
+- `MonadReader` is a common class from the `mtl` package.
+- Allows us to avoid concrete transformer stacks throughout much of our code.
+- Class is not permitted by Haskell 2010
+:::
+
