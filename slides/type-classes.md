@@ -4,24 +4,27 @@
 
 ::: {.left}
 
-::: {.fragment}
+::: {.fragment data-fragment-index="1"}
 [Section 4.3.1 of the standard](https://www.haskell.org/onlinereport/haskell2010/haskellch4.html#x10-750004.3) covers type classes.
 :::
 
-:::{.fragment}
+:::{.fragment data-fragment-index="2"}
 To summarise, it says that a type class declaration must have the following form.
 :::
 :::
 
-<pre class="nohighlight fragment"><code data-trim data-noescape>
-<span class="fragment highlight-current-green">class</span> <span class="fragment highlight-current-green">cx =></span> <span class="fragment highlight-current-green">C</span> <span class="fragment highlight-current-green">u</span> <span class="fragment highlight-current-green">where cdecls</span>
+<pre class="nohighlight fragment" style="font-size: 1.1em" data-fragment-index="3"><code data-trim data-noescape>
+<span class="fragment highlight-current-green" data-fragment-index="4">class</span> <span class="fragment highlight-current-green" data-fragment-index="5">cx =></span> <span class="fragment highlight-current-green" data-fragment-index="6">C</span> <span class="fragment highlight-current-green" data-fragment-index="7">u</span> <span class="fragment highlight-current-green" data-fragment-index="8">where cdecls</span>
 </code></pre>
 
-::: {.notes}
- - _may_ have a context (`cx => `);
- - _must_ have a class name (`C`);
- - _must_ be parameterised over exactly one type (`u`); and
- - _may_ declare one or more members (`where cdecls`).
+::: {.left}
+<ul>
+<span class="fragment" data-fragment-index="4"><li>_must_ have the `class` keyword;</li></span>
+<span class="fragment" data-fragment-index="5"><li>_may_ have a context;</li></span>
+<span class="fragment" data-fragment-index="6"><li>_must_ have a class name;</li></span>
+<span class="fragment" data-fragment-index="7"><li>_must_ be parameterised over exactly one type; and</li></span>
+<span class="fragment" data-fragment-index="8"><li>_may_ declare one or more members.</li></span>
+</ul>
 :::
 
 ##
