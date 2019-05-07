@@ -54,3 +54,4 @@
 *** [[https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/][ryanglscott on GND, ~join~, roles, etc]]
 
 *** [[https://gitlab.haskell.org/ghc/ghc/wikis/roles2#join][roles2 on GHC wiki]]
+*** [[http://web.cecs.pdx.edu/~mpj/pubs/fundeps-esop2000.pdf][type classes with functional dependencies paper]]
