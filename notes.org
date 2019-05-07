@@ -28,29 +28,29 @@
 *** ~MultiParameterTypeClasses~
 *** ~UndecidableInstances~
 ** References
-[[https://gist.github.com/rwbarton/dd8e51dce2a262d17a80][Flexible instances breaking things]]
+*** [[https://gist.github.com/rwbarton/dd8e51dce2a262d17a80][Flexible instances breaking things]]
 
-[[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/lang.html][GHC user guide]]
+*** [[https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/lang.html][GHC user guide]]
 
-[[https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-19100012.3][Haskell 2010 report]]
+*** [[https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-19100012.3][Haskell 2010 report]]
 
-[[https://limperg.de/ghc-extensions/][Guide to GHC extensions with lots of great links]]
+*** [[https://limperg.de/ghc-extensions/][Guide to GHC extensions with lots of great links]]
 
-[[https://ocharles.org.uk/pages/2014-12-01-24-days-of-ghc-extensions.html][OCharles' 24 days of GHC Extensions]]
+*** [[https://ocharles.org.uk/pages/2014-12-01-24-days-of-ghc-extensions.html][OCharles' 24 days of GHC Extensions]]
  - MPTC section is good --- highlights lack of inference information (leads to FunDeps).
 
-[[http://www.cse.chalmers.se/~hallgren/Papers/wm01.html][Fun with functional dependencies paper]]
+*** [[http://www.cse.chalmers.se/~hallgren/Papers/wm01.html][Fun with functional dependencies paper]]
 
-[[http://okmij.org/ftp/Haskell/HList-ext.pdf][Strongly typed heterogenous collections paper]]
+*** [[http://okmij.org/ftp/Haskell/HList-ext.pdf][Strongly typed heterogenous collections paper]]
 
-[[https://www.haskell.org/cabal/users-guide/developing-packages.html?highlight=extensions#pkg-field-default-extensions][Cabal docs on default-extensions]]
+*** [[https://www.haskell.org/cabal/users-guide/developing-packages.html?highlight=extensions#pkg-field-default-extensions][Cabal docs on default-extensions]]
 
-[[https://www.haskell.org/onlinereport/decls.html#sect4.3.4][defaulting rules (relevant to ~OverloadedStrings~)]]
+*** [[https://www.haskell.org/onlinereport/decls.html#sect4.3.4][defaulting rules (relevant to ~OverloadedStrings~)]]
 
-[[https://gitlab.haskell.org/ghc/ghc/wikis/roles][Roles in GHC wiki]]
+*** [[https://gitlab.haskell.org/ghc/ghc/wikis/roles][Roles in GHC wiki]]
 
-[[https://augustss.blogspot.com/2014/12/its-time-for-some-more-haskell-opinions.html][Augustss opinions on extensions]]
+*** [[https://augustss.blogspot.com/2014/12/its-time-for-some-more-haskell-opinions.html][Augustss opinions on extensions]]
 
-[[https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/][ryanglscott on GND, ~join~, roles, etc]]
+*** [[https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/][ryanglscott on GND, ~join~, roles, etc]]
 
-[[https://gitlab.haskell.org/ghc/ghc/wikis/roles2#join][roles2 on GHC wiki]]
+*** [[https://gitlab.haskell.org/ghc/ghc/wikis/roles2#join][roles2 on GHC wiki]]
