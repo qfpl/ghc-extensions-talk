@@ -59,3 +59,40 @@ data C = C deriving (Eq, Ord, Show)</span>
 insC = insert</span>
 </code></pre>
 
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out">module Main where
+
+import Data.Set (Set, empty)
+
+import FIA
+import FIB
+import FIC
+
+test :: Set (Whoopsie A B C)
+test =</span>
+  <span class="fragment">insB (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A2 B C) $ empty</span>
+
+<span class="fragment">main :: IO ()
+main =
+  print test</span>
+</code></pre>
+
+##
+
+
+<pre class="no-highlight"><code data-trim data-noescape>
+<span class="fragment fade-in-then-semi-out">$ ghc --version
+The Glorious Glasgow Haskell Compilation System, version 8.4.4</span>
+
+<span class="fragment fade-in-then-semi-out">$ ghc -Wall -fforce-recomp Main.hs -o whoopsie</span>
+<span class="fragment fade-in-then-semi-out">[1 of 4] Compiling FIA              ( FIA.hs, FIA.o )
+[2 of 4] Compiling FIB              ( FIB.hs, FIB.o )
+[3 of 4] Compiling FIC              ( FIC.hs, FIC.o )
+[4 of 4] Compiling Main             ( Main.hs, Main.o )
+Linking whoopsie ...</span>
+
+<span class="fragment fade-in-then-semi-out">> ./whoopsie
+fromList [Whoopsie A1 B C,Whoopsie A2 B C,Whoopsie A1 B C]</span>
+</code></pre>
