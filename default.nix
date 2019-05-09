@@ -27,7 +27,7 @@ in
     '';
 
     buildPhase = ''
-      cat $src/slides/wip.md \
+      cat \
           $src/slides/title.md \
           $src/slides/intro.md \
           $src/slides/what-are-extensions.md \
