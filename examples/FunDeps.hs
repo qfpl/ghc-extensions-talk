@@ -9,9 +9,6 @@ module FunDeps where
 class Monad m => MonadReader r m | m -> r  where
   ask :: m r
 
--- class Monad m => MonadReader r m where
---   ask :: m r
-
 instance MonadReader r ((->) r) where
   ask = id
 
@@ -31,5 +28,3 @@ bar ::
   => m Integer
 bar = (+1) <$> ask
 
-class (Eq a) => Crumbs a b where
-  crumbs :: 
