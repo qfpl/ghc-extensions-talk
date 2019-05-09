@@ -2,15 +2,15 @@
 
 ##
 
-```
+<pre class="no-highlight"><code data-trim data-noescape>
 type-class-extensions.lhs:3:3: error:
     • Too many parameters for class ‘Foo’
-      (Enable MultiParamTypeClasses to allow multi-parameter classes)
+      <span class="fragment highlight-current-green">(Enable MultiParamTypeClasses to allow multi-parameter classes)</span>
     • In the class declaration for ‘Foo’
   |
 3 | > class Foo a b where
   |   ^^^^^^^^^^^^^^^^^^^...
-```
+</code></pre>
 
 ::: notes
  - Raise hands if you've seen an error like this before?

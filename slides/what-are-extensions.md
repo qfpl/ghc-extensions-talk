@@ -2,28 +2,26 @@
 
 ## Haskell 2010
 
-::: {class="left fragment fade-in-then-semi-out"}
-There are multiple versions of the Haskell programming language.
-:::
-
-::: {class="left fragment fade-in-then-semi-out"}
-Most people are probably using Haskell 2010.
-:::
-
-::: {class="left fragment fade-in-then-semi-out"}
+::: {.left}
 Haskell 2010 is defined in the [Haskell 2010 Language Report](https://www.haskell.org/onlinereport/haskell2010/haskell.html).
 :::
 
-## What's not in Haskell 2010?
+::: {.notes}
+There are multiple versions of the Haskell programming language.
 
-::: {class="left fragment fade-in-then-semi-out"}
-Haskell 2010 _doesn't_ include a bunch of language features that you might think of as being part of Haskell.
+Most people are probably using Haskell 2010.
 :::
+
+## What's not in Haskell 2010?
 
 ::: {class="left"}
 - Type classes with more than one parameter.
 - String literals for anything other than `[Char]`
 - Generalised Algebraic Data Types (GADTs)
+:::
+
+::: {.notes}
+Might think of these as standard.
 :::
 
 ## Language extensions
@@ -42,10 +40,11 @@ Support for language extensions is encouraged, but not required.
 
 ## Enabling extensions in GHC
 
-- `{-# LANGUAGE #-}` pragmas
-- `default-extensions` field in a `.cabal` file
-- GHC flag
-- `:set -X` in GHC
+<!-- We're about to go through each of these in more detail --- cut to the chase -->
+<!-- - `{-# LANGUAGE #-}` pragmas -->
+<!-- - `default-extensions` field in a `.cabal` file -->
+<!-- - GHC flag -->
+<!-- - `:set -X` in GHC -->
 
 ##
 
@@ -56,7 +55,7 @@ Support for language extensions is encouraged, but not required.
 
 ##
 
-```
+```no-highlight
 default-extensions:    OverloadedStrings
                      , GADTs
                      , ScopedTypeVariables
@@ -64,13 +63,13 @@ default-extensions:    OverloadedStrings
 
 ##
 
-```
+```no-highlight
 ghc -XOverloadedStrings Foo.hs
 ```
 
 ##
 
-```
+```no-highlight
 $ ghci
 λ :set -XOverloadedStrings
 ```
