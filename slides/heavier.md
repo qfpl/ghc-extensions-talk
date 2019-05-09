@@ -20,20 +20,33 @@ Scope type variables to the lexical scope of their associated expressions.
 
 ##
 
-### TODO: highlighting/animation
-
 <pre><code class="nohighlight" data-trim data-noescape>
-Couldn't match type ‘a’ with ‘a1’
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">Couldn't match type ‘a’ with ‘a1’
 ‘a’ is a rigid type variable bound by
-  the type signature for:
-    f :: forall a. [a] -> [a]
-  at examples/ScopedTypeVariables.hs:(5,1)-(6,12)
+  the type signature for:</span>
+    <span class="fragment" data-fragment-index="1">f :: forall a. [a] -> [a]</span>
+  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:(5,1)-(6,12)
 ‘a1’ is a rigid type variable bound by
-  the type signature for:
-    ys :: forall a1. [a1]
-  at examples/ScopedTypeVariables.hs:10:5-13
+  the type signature for:</span>
+    <span class="fragment" data-fragment-index="1">ys :: forall a1. [a1]</span>
+  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:10:5-13
 Expected type: [a1]
-  Actual type: [a]
+  Actual type: [a]</span><span class="fragment" data-fragment-index="2"></span>
+</code></pre>
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment">{-# LANGUAGE ScopedTypeVariables #-}</span>
+
+f ::
+  <span class="fragment">forall a.</span>
+  [a] -> [a]
+f xs =
+  ys ++ ys
+  where
+    ys :: [a]
+    ys = reverse xs
 </code></pre>
 
 ## `GeneralisedNewtypeDeriving`
@@ -79,10 +92,18 @@ Can't make a derived instance of ‘Pretty Age’:
  - Focusing on current implementation that fixes that problem.
 :::
 
+##
+
+### TODO: parameters to type functions and constructors have roles
+
+Roles determine which type of equality is used to check if types are equal.
+
 ## Nominal equality
 
 ::: {.left}
 Two types are nominally equal if they are the same type.
+
+<span class="fragment">The `~` type operator denotes nominal equality.</span>
 :::
 
 <pre><code class="haskell" data-trim data-noescape>
@@ -101,7 +122,7 @@ Two types are nominally equal if they are the same type.
 ::: {.left}
 Two types that have the same machine representation are equal.
 
-<span class="fragment">`Coercible` constraint in Haskell denotes representational equality.</span>
+<span class="fragment">`Coercible` constraint in GHC denotes representational equality.</span>
 :::
 
 <pre><code class="haskell" data-trim data-noescape>
@@ -138,9 +159,9 @@ Phantom types cannot change representational equality, so any two types are phan
 :::
 
 <pre><code class="haskell" data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data Foo </span><span class="fragment" data-fragment-index="1">a</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1"> = Foo</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data Foo </span><span class="fragment" data-fragment-index="1">a</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1"> = Foo</span><span class="fragment" data-fragment-index="2"></span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">Foo Int ~<sub>P</sub> Foo Bool</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">Foo Int ~<sub>P</sub> Foo Bool</span>
 </code></pre>
 
 ::: {.notes}
@@ -185,7 +206,9 @@ newtype Age = Age Int
 
 ##
 
-```
+### TODO: highlighting
+
+<pre class="no-highlight"><code data-trim data-noescape>
     • Couldn't match representation of type ‘m (IdentityT m a)’
                                with that of ‘m (m a)’
         arising from the coercion of the method ‘join’
@@ -198,7 +221,7 @@ IdentityT m a’
    |
 43 |   deriving (Functor, Applicative, MonadJoin)
    |                                   ^^^^^^^^^
-```
+</code></pre>
 
 ##
 
@@ -224,3 +247,4 @@ nominally equal for equality to hold.
 SIDE NOTE: quantified constraints allow us to constrain instances such that `m` has to have representational
 type parameters.
 :::
+
