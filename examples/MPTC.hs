@@ -11,3 +11,5 @@ data Blah = Blah deriving (Eq)
 
 instance Crumbs Blah where
   crumbs = show
+
+-- TODO: How does instance selection for crumbs work?!
