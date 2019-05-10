@@ -34,12 +34,12 @@ Some examples
 :::
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">class Eq a => Ord a where
-  compare :: a -> a -> Ordering
-  ...</span>
-
 <span class="fragment fade-in-then-semi-out">class Show a where
   show :: a -> String
+  ...</span>
+
+<span class="fragment fade-in-then-semi-out">class Eq a => Ord a where
+  compare :: a -> a -> Ordering
   ...</span>
 
 <span class="fragment fade-in-then-semi-out">class (Ord a, Show a) => ShOrd a</span>
@@ -84,7 +84,7 @@ Allows type classes with more than one type parameter.
 
 ##
 
-```{.haskell .fragment}
+```haskell
 class Monad m => MonadReader r m where
   ask :: m r
   ...
@@ -173,7 +173,7 @@ data Whoopsie a b c =
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FlexibleInstances #-}</span>
+{-# LANGUAGE FlexibleInstances #-}
 
 <span class="fragment fade-in-then-semi-out" data-fragment-index="2">module FIB where
 
@@ -233,18 +233,18 @@ main =
 ##
 
 <pre class="no-highlight"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">$ ghc --version
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">$ ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.4.4</span>
 
-<span class="fragment fade-in-then-semi-out">$ ghc -Wall -fforce-recomp Main.hs -o whoopsie</span>
-<span class="fragment fade-in-then-semi-out">[1 of 4] Compiling FIA              ( FIA.hs, FIA.o )
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">$ ghc -Wall -fforce-recomp Main.hs -o whoopsie</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">[1 of 4] Compiling FIA              ( FIA.hs, FIA.o )
 [2 of 4] Compiling FIB              ( FIB.hs, FIB.o )
 [3 of 4] Compiling FIC              ( FIC.hs, FIC.o )
 [4 of 4] Compiling Main             ( Main.hs, Main.o )
 Linking whoopsie ...</span>
 
-<span class="fragment fade-in-then-semi-out">> ./whoopsie
-fromList [Whoopsie A1 B C,Whoopsie A2 B C,Whoopsie A1 B C]</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="4">> ./whoopsie
+fromList [</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">,Whoopsie A2 B C,</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">]</span><span class="fragment" data-fragment-index="5"></span>
 </code></pre>
 
 ## `FunctionalDependencies`
@@ -356,26 +356,20 @@ FunDeps.hs:14:10: error:
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE MultiParamTypeClasses #-}</span>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2"><mark>{-# LANGUAGE FunctionalDependencies #-}</mark></span>
+{-# LANGUAGE MultiParamTypeClasses #-}
+<mark>{-# LANGUAGE FunctionalDependencies #-}</mark>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">module FunDeps where</span>
+module FunDeps where
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">class Monad m => MonadReader r m</span> <span class="fragment" data-fragment-index="3">| m -> r </span><span class="fragment fade-in-then-semi-out" data-fragment-index="3">where
-  ask :: m r</span><span class="fragment" data-fragment-index="4"></span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Monad m => MonadReader r m</span> <span class="fragment" data-fragment-index="1">| m -> r </span><span class="fragment fade-in-then-semi-out" data-fragment-index="1">where
+  ask :: m r</span><span class="fragment" data-fragment-index="2"></span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="5">instance MonadReader r ((->) r) where
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">instance MonadReader r ((->) r) where
   ask = id</span>
 
-<span class="fragment fade-in-then-out" data-fragment-index="6">newtype Sinteger = Sinteger Integer
-  deriving (Eq, Show, Num, Ord, Real, Enum, Integral)
-
-instance MonadReader Integer ((->) Sinteger) where
-  ask (Sinteger n) = n + 1</span><span class="fragment" data-fragment-index=7"></span>
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="8">foo ::
+<span class="fragment fade-in-then-semi-out" data-fragment-index="4">foo ::
   Integer
 foo =
   (+ 1) <$> ask $ 41</span>
