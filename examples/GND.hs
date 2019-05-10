@@ -3,12 +3,13 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module GND where
 
 import Control.Applicative (Applicative)
 import Data.Set
--- import Data.Text (Text, pack)
+import Data.Text (Text, pack)
 
 -- data family Z :: * -> *
 
@@ -25,14 +26,14 @@ import Data.Set
 
 -- main = case isInt (ZI 4.0) of ZM tu -> print tu
 
--- class Pretty a where
---   pretty :: a -> Text
+class Pretty a where
+  pretty :: a -> Text
 
--- instance Pretty Int where
---   pretty = pack . show
+instance Pretty Int where
+  pretty = pack . show
 
--- newtype Age = Age Int
---   deriving (Show, Pretty)
+newtype Age = Age Int
+  deriving (Show, Pretty)
 
 class Applicative m => Monad' m where
   join :: m (m a) -> m a
@@ -103,3 +104,10 @@ newtype IdentityT m a = IdentityT (m a)
 -- main = do
 --     print a1
 --     print a2
+
+type family Fam a where
+  Fam Int = Bool
+  Fam Age = String
+
+data Quux a b c =
+  Quux a b c

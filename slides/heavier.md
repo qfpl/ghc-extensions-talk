@@ -61,12 +61,16 @@ Derive instances for `newtype`s based on the type they wrap.
 class Pretty a where
   pretty :: a -> Text
 
-instance Pretty Int where
-  pretty = pack . show
+<span class="fragment">instance Pretty Int where
+  pretty = pack . show</span>
 
-newtype Age = Age Int
-  deriving (Show, Pretty)
+<span class="fragment">newtype Age = Age Int
+  deriving (Show, Pretty)</span>
 </code></pre>
+
+::: {.notes}
+`newtypes` allow the type system to differentiate values that have the same machine representation.
+:::
 
 ##
 
@@ -76,27 +80,68 @@ Can't make a derived instance of ‘Pretty Age’:
   Try GeneralizedNewtypeDeriving for GHC's newtype-deriving extension
 </code></pre>
 
+##
+
+<pre><code class="haskell" data-trim data-noescape>
+class Coercible a b
+
+<span class="fragment">coerce :: Coercible a b => a -> b</span>
+
+<span class="fragment">instance (Coercible a b) => Coercible (a -> c) (b -> c)
+instance Coercible a => Coercible (Maybe a) (Maybe b)</span>
+</code></pre>
+
+::: {.notes}
+- Coercible instances tell the type checker that two types have the same representation.
+   + same bit pattern in memory
+- Programmers cannot create instances of `Coercible`.
+- This is just a view that is familiar to programmers.
+:::
+
+##
+
+<pre><code class="haskell" data-trim data-noescape>
+instance Pretty Int where
+  pretty = pack . show
+
+newtype Age = Age Int
+  deriving (Show, Pretty)
+  
+<span class="fragment">instance Coercible Int Age
+instance Coercible Age Int</span>
+
+<span class="fragment">instance Pretty Age where
+  pretty = coerce $ pack . show
+</code></pre>
+
 ## Roles
 
 ::: {.left}
-`GeneralisedNewtypeDeriving` as it was originally implemented had some issues that resulted in **roles** being added to the language.
+<span class="fragment">`GeneralisedNewtypeDeriving` as it was originally implemented had some issues that resulted in **roles** being added to the language.</span>
+:::
 
-- nominal
-- representational
+##
+
+:::{.left}
+Roles determine which notion of equality is used to check if types are equal.
+
+<span class="fragment">Parameters to type level functions are given roles depending on how they are used</span>
+
+- nominal --- `a ~ b`
+- representational --- `Coercible a b`
 - phantom
 :::
 
 ::: {.notes}
  - Before roles, newtypes could cause seg faults in some special circumstances.
     + Mixing nominal and representational equality to convince GHC that two types had representational equality when they didn't.
- - Focusing on current implementation that fixes that problem.
+ - Example before, we talked about the type system differentiating between things with the same representation.
+ - Hinting at different notions of equality.
 :::
 
-##
-
-### TODO: parameters to type functions and constructors have roles
-
-Roles determine which type of equality is used to check if types are equal.
+::: {.notes}
+By "type level functions" I mean things that act like functions: data types, classes, synonyms, type families etc.
+:::
 
 ## Nominal equality
 
@@ -117,6 +162,24 @@ Two types are nominally equal if they are the same type.
 - Used by `~` constraint.
 :::
 
+##
+
+:::{.left}
+A parameter is given the nominal role if its name is relevant to determining a type's representation.
+:::
+
+<pre><code class="haskell" data-trim data-noescape>
+<span class="fragment">newtype Age = Age Int</span>
+
+<span class="fragment">type family Fam a where
+  Fam Int = Bool
+  Fam Age = String</span>
+
+<span class="fragment">data Foo a where
+  Bar :: Foo Int
+  Baz :: Foo Age</span>
+</code></pre>
+
 ## Representational equality
 
 ::: {.left}
@@ -126,64 +189,40 @@ Two types that have the same machine representation are equal.
 :::
 
 <pre><code class="haskell" data-trim data-noescape>
-<span class="fragment">class Coercible a b</span>
-
-<span class="fragment">coerce :: Coercible a b => a -> b</span>
-</code></pre>
-
-::: {.notes}
-- Coercible instances tell the type checker that two types have the same representation.
-   + same bit pattern in memory
-- Programmers cannot create instances of `Coercible`.
-- This is just a view that is familiar to programmers.
-:::
-
-##
-
-<pre><code class="haskell" data-trim data-noescape>
 <span class="fragment">newtype Age = Age Int</span>
 
 <span class="fragment">Coercible Age Int
 Coercible Int Age</span>
+</code></pre>
 
-<span class="fragment">Coercible (Maybe Int) (Maybe Age)
-Coercible [Age] [Int]</span>
+##
 
-<span class="fragment">Coercible (Int -> Int) (Age -> Age)</span>
+A parameter is given the representational role if only its representation is relevant to determining a type's representation.
+
+<pre class="fragment"><code class="haskell" data-trim data-noescape>
+data Maybe a =
+  Just a
+  | Nothing
+  
+<span class="fragment">(->) a b</span>
 </code></pre>
 
 ## Phantom equality
 
 ::: {.left}
-Phantom types cannot change representational equality, so any two types are phantom equal.
+Phantom types have no bearing on a type's representation, so any two types are phantom equal.
 :::
 
-<pre><code class="haskell" data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">data Foo </span><span class="fragment" data-fragment-index="1">a</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1"> = Foo</span><span class="fragment" data-fragment-index="2"></span>
+<pre class="fragment"><code class="haskell" data-trim data-noescape>
+data Foo a = Foo
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">Foo Int ~<sub>P</sub> Foo Bool</span>
+<span class="fragment">Coercible (Foo a) (Foo b)</span>
 </code></pre>
 
 ::: {.notes}
 - Phantom equality is a convenience for talking about representational equality.
 - This isn't necessary for type soundness.
 :::
-
-##
-
-<pre><code class="haskell" data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Pretty a where
-  pretty :: a -> Text
-
-instance Pretty Int where
-  pretty = pack . show
-
-newtype Age = Age Int
-  deriving (Show)</span>
-  
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">instance Pretty Age where
-  pretty = </span><span class="fragment" data-fragment-index="2">coerce</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> (pack . show)</span><span class="fragment" data-fragment-index="3"></span>
-</code></pre>
 
 ## The roles that bind us
 
