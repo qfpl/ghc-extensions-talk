@@ -130,6 +130,11 @@ Relaxes the rules for valid type class instances.
 123 | instance MonadReader r ((->) r) where</span>
 </code></pre>
 
+::: {.notes}
+- First parameter not a type constructor.
+- `r` appears multiple times.
+:::
+
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
