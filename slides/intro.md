@@ -1,6 +1,4 @@
-# Intro
-
-##
+#
 
 <pre class="no-highlight"><code data-trim data-noescape>
 type-class-extensions.lhs:3:3: error:
