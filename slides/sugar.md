@@ -9,21 +9,20 @@ Enable overloaded string literals via the `IsString` type class.
 ##
 
 <pre class="no-highlight"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">GHCi, version 8.6.4: http://www.haskell.org/ghc/  :? for help
+GHCi, version 8.6.4: http://www.haskell.org/ghc/  :? for help
 Loaded GHCi configuration from /home/andrew/git/dot-files/.ghci
 λ> :t "Lambda"
-"Lambda" :: [Char]</span>
+"Lambda" :: [Char]
 <span class="fragment">λ> :set -XOverloadedStrings 
 λ> :t "Jam"
 "Jam" :: Data.String.IsString p => p</span>
 </code></pre>
 
-
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">class IsString a where
-  fromString :: String -> a</span>
+class IsString a where
+  fromString :: String -> a
 <div class="fragment fade-in-then-semi-out">
 instance IsString Text where
   fromString = pack
@@ -42,17 +41,19 @@ Allow partially applied tuple constructors.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
+\x -> x * 2
+
 <span class="fragment fade-in-then-semi-out">(* 2)</span>
 
-<span class="fragment fade-in-then-semi-out">(,True)</span>
-
 <span class="fragment fade-in-then-semi-out">\x -> (x,True)</span>
+
+<span class="fragment fade-in-then-semi-out">(,True)</span>
 </code></pre>
 
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-(,True,,,42::Int,)<span class="fragment fade-in"> :: a -> b -> c -> d -> (a,Bool,b,c,Int,d)</span>
+(,True,,,"hi",)<span class="fragment fade-in"> :: a -> b -> c -> d -> (a,Bool,b,c,String,d)</span>
 </code></pre>
 
 ## `InstanceSigs`
@@ -64,9 +65,9 @@ Allow type signatures for definitions of instance members.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance (Traversable f, Traversable g) => Traversable (Compose f g)</span>
-  <span class="fragment fade-in" data-fragment-index="2">traverse :: (a -> h b) -> Compose f g a -> h (Compose f g b)</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">traverse = undefined</span>
+instance (Traversable f, Traversable g) => Traversable (Compose f g)
+  <span class="fragment">traverse :: (a -> h b) -> Compose f g a -> h (Compose f g b)</span>
+  traverse = undefined
 </code></pre>
 
 ## `LambdaCase`
