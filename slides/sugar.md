@@ -70,6 +70,18 @@ instance (Traversable f, Traversable g) => Traversable (Compose f g)
   traverse = undefined
 </code></pre>
 
+##
+
+<pre class="no-highlight"><code data-trim data-noescape>
+    • Illegal type signature in instance declaration:
+        traverse' :: (a -> h b) -> Compose f g a -> h (Compose f g b)
+      (Use InstanceSigs to allow this)
+    • In the instance declaration for ‘Traversable' (Compose f g)’
+   |
+25 |   traverse' :: (a -> h b) -> Compose f g a -> h (Compose f g b)
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</code></pre>
+
 ## `LambdaCase`
 
 ::: {class="left"}
