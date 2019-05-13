@@ -64,8 +64,8 @@ class Pretty a where
 <span class="fragment">instance Pretty Int where
   pretty = pack . show</span>
 
-<span class="fragment">newtype Age = Age Int
-  deriving (Show, Pretty)</span>
+<span class="fragment">newtype Age = Age Int</span>
+  <span class="fragment">deriving (Show, Pretty)</span>
 </code></pre>
 
 ::: {.notes}
@@ -86,9 +86,6 @@ Can't make a derived instance of ‘Pretty Age’:
 class Coercible a b
 
 <span class="fragment">coerce :: Coercible a b => a -> b</span>
-
-<span class="fragment">instance (Coercible a b) => Coercible (a -> c) (b -> c)
-instance Coercible a => Coercible (Maybe a) (Maybe b)</span>
 </code></pre>
 
 ::: {.notes}
@@ -101,6 +98,7 @@ instance Coercible a => Coercible (Maybe a) (Maybe b)</span>
 ##
 
 <pre><code class="haskell" data-trim data-noescape>
+<span class="fragment">{-# LANGUAGE GeneralisedNewtypeDeriving #-}</span>
 instance Pretty Int where
   pretty = pack . show
 
