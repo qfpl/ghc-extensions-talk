@@ -302,7 +302,7 @@ foo =
 
 <pre class="haskell"><code data-trim data-noescape>
 <span class="fragment fade-in-then-semi-out">{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
 module FunDeps where</span>
@@ -357,7 +357,7 @@ FunDeps.hs:14:10: error:
 
 <pre class="haskell"><code data-trim data-noescape>
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 <mark>{-# LANGUAGE FunctionalDependencies #-}</mark>
 
