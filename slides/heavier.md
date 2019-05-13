@@ -11,11 +11,11 @@ Scope type variables to the lexical scope of the expression.
 <pre class="haskell"><code data-trim data-noescape>
 f ::
   [a] -> [a]
-<span class="fragment fade-out fade-semi-out" data-fragment-index="1">f xs =
+<span class="fragment fade-semi-out" data-fragment-index="1">f xs =
   ys ++ ys
   where</span>
     ys :: [a]
-    <span class="fragment fade-out fade-semi-out" data-fragment-index="1">ys = reverse xs</span>
+    <span class="fragment fade-semi-out" data-fragment-index="1">ys = reverse xs</span>
 </code></pre>
 
 ##

@@ -54,12 +54,12 @@ div.left {
 }
 
 /* Start displayed, then fade semi-out */
-.reveal .slides section .fragment.fade-out.fade-semi-out.current-fragment {
-    opacity: 0.5;
+.reveal .slides section .fragment.fade-semi-out {
+    opacity: 1;
     visibility: inherit;
 }
 
-.reveal .slides section .fragment.fade-out.fade-semi-out.visible {
+.reveal .slides section .fragment.fade-semi-out.visible {
     opacity: 0.5;
     visibility: inherit;
 }
