@@ -3,19 +3,19 @@
 ## `ScopedTypeVariables`
 
 ::: {.left}
-Scope type variables to the lexical scope of their associated expressions.
+Scope type variables to the lexical scope of the expression.
 :::
 
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment" data-fragment-index="1">f ::
-  [a] -> [a]</span>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">f xs =
+f ::
+  [a] -> [a]
+<span class="fragment fade-out fade-semi-out" data-fragment-index="1">f xs =
   ys ++ ys
   where</span>
-    <span class="fragment" data-fragment-index="1">ys :: [a]</span><span class="fragment" data-fragment-index="2"> </span>
-    <span class="fragment fade-in-then-semi-out" data-fragment-index="1">ys = reverse xs</span>
+    ys :: [a]
+    <span class="fragment fade-out fade-semi-out" data-fragment-index="1">ys = reverse xs</span>
 </code></pre>
 
 ##
