@@ -29,20 +29,16 @@ To summarise, it says that a type class declaration must have the following form
 
 ##
 
-::: {.left}
-Some examples
-:::
-
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">class Show a where
+<span class="fragment fade-semi-out" data-fragment-index="1">class Show a where
   show :: a -> String
   ...</span>
 
-<span class="fragment fade-in-then-semi-out">class Eq a => Ord a where
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Eq a => Ord a where
   compare :: a -> a -> Ordering
   ...</span>
 
-<span class="fragment fade-in-then-semi-out">class (Ord a, Show a) => ShOrd a</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">class (Ord a, Show a) => ShOrd a</span>
 </code></pre>
 
 ::: {.notes}
@@ -90,10 +86,6 @@ class Monad m => MonadReader r m where
   ...
 ```
 
-::: {.fragment .left}
-_must_ be parameterised over exactly one type
-:::
-
 ::: {.notes}
 - `MonadReader` is a common class from the `mtl` package.
 - Allows us to avoid concrete transformer stacks throughout much of our code.
@@ -109,8 +101,8 @@ Relaxes the rules for valid type class instances.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment">class Monad m => MonadReader r m where
-  ask :: m r</span>
+class Monad m => MonadReader r m where
+  ask :: m r
 
 <span class="fragment">instance MonadReader r ((->) r) where
   ask = id
@@ -119,12 +111,12 @@ Relaxes the rules for valid type class instances.
 ##
 
 <pre class="no-highlight"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">type-class-extensions.lhs:123:10-32: error:
+<span class="fragment fade-semi-out" data-fragment-index="1">type-class-extensions.lhs:123:10-32: error:
     • Illegal instance declaration for ‘MonadReader r ((->) r)’</span>
-        <span class="fragment" data-fragment-index="1"><span class="fragment highlight-current-green" data-fragment-index="2">(All instance types must be of the form (T a1 ... an)
-         where a1 ... an are *distinct type variables*</span></span><span class="fragment fade-in-then-semi-out" data-fragment-index="1">,
-         and </span><span class="fragment" data-fragment-index="1"><span class="fragment highlight-current-green" data-fragment-index="3">each type variable appears at most once in the instance head.</span>
-         <span class="fragment highlight-current-green" data-fragment-index="4">Use FlexibleInstances if you want to disable this.</span></span><span class="fragment fade-in-then-semi-out" data-fragment-index="1">)
+        <span class="fragment highlight-current-green" data-fragment-index="1">(All instance types must be of the form (T a1 ... an)
+         where a1 ... an are *distinct type variables*</span><span class="fragment fade-semi-out" data-fragment-index="1">,
+         and </span><span class="fragment highlight-current-green" data-fragment-index="2">each type variable appears at most once in the instance head.</span>
+         <span class="fragment highlight-current-green" data-fragment-index="3">Use FlexibleInstances if you want to disable this.</span><span class="fragment fade-semi-out" data-fragment-index="1">)
     • In the instance declaration for ‘MonadReader r ((->) r)’
     |
 123 | instance MonadReader r ((->) r) where</span>
@@ -151,84 +143,84 @@ instance Twizzle (Maybe Integer) where
 `FlexibleInstances` also allows us to write instances for fully concrete types.
 :::
 
-## Not so benign
+<!-- ## Not so benign -->
 
-::: {.notes}
-- Seen some people claim that FlexibleInstances is benign.
-- Often is, but it can bite you if you're not careful.
-:::
+<!-- ::: {.notes} -->
+<!-- - Seen some people claim that FlexibleInstances is benign. -->
+<!-- - Often is, but it can bite you if you're not careful. -->
+<!-- ::: -->
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-module FIA where
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- module FIA where -->
 
-data A = A1 | A2 deriving (Eq, Ord, Show)
+<!-- data A = A1 | A2 deriving (Eq, Ord, Show) -->
 
-data Whoopsie a b c =
-  Whoopsie a b c
-  deriving (Eq, Show)
-</code></pre>
+<!-- data Whoopsie a b c = -->
+<!--   Whoopsie a b c -->
+<!--   deriving (Eq, Show) -->
+<!-- </code></pre> -->
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-{-# LANGUAGE FlexibleInstances #-}
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- {-# LANGUAGE FlexibleInstances #-} -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">module FIB where
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="2">module FIB where -->
 
-import Data.Set (Set, insert)
-import FIA</span>
+<!-- import Data.Set (Set, insert) -->
+<!-- import FIA</span> -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">data B = B deriving (Eq, Ord, Show)</span>
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="3">data B = B deriving (Eq, Ord, Show)</span> -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="4">instance Ord c => </span><span class="fragment" data-fragment-index="4">Ord (Whoopsie A B c)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4"> where
-  compare (Whoopsie a1 b1 c1) (Whoopsie a2 b2 c2) =</span>
-    <span class="fragment" data-fragment-index="4">compare a1 a2</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4"> <> compare b1 b2 <> compare c1 c2</span><span class="fragment" data-fragment-index="5"></span>
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="4">instance Ord c => </span><span class="fragment" data-fragment-index="4">Ord (Whoopsie A B c)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4"> where -->
+<!--   compare (Whoopsie a1 b1 c1) (Whoopsie a2 b2 c2) =</span> -->
+<!--     <span class="fragment" data-fragment-index="4">compare a1 a2</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4"> <> compare b1 b2 <> compare c1 c2</span><span class="fragment" data-fragment-index="5"></span> -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="6">insB :: Ord c => Whoopsie A B c -> Set (Whoopsie A B c) -> Set (Whoopsie A B c)
-insB = insert</span>
-</code></pre>
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="6">insB :: Ord c => Whoopsie A B c -> Set (Whoopsie A B c) -> Set (Whoopsie A B c) -->
+<!-- insB = insert</span> -->
+<!-- </code></pre> -->
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FlexibleInstances #-}
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FlexibleInstances #-} -->
 
-module FIC where
+<!-- module FIC where -->
 
-import Data.Set (Set, insert)
-import FIA
+<!-- import Data.Set (Set, insert) -->
+<!-- import FIA -->
 
-data C = C deriving (Eq, Ord, Show)</span>
+<!-- data C = C deriving (Eq, Ord, Show)</span> -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">instance Ord b => </span><span class="fragment" data-fragment-index="2">Ord (Whoopsie A b C)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> where
-  compare (Whoopsie a1 b1 c1) (Whoopsie a2 b2 c2) =</span>
-    <span class="fragment" data-fragment-index="2">compare a2 a1</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> <> compare b1 b2 <> compare c1 c2</span><span class="fragment" data-fragment-index="3"></span>
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="2">instance Ord b => </span><span class="fragment" data-fragment-index="2">Ord (Whoopsie A b C)</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> where -->
+<!--   compare (Whoopsie a1 b1 c1) (Whoopsie a2 b2 c2) =</span> -->
+<!--     <span class="fragment" data-fragment-index="2">compare a2 a1</span><span class="fragment fade-in-then-semi-out" data-fragment-index="2"> <> compare b1 b2 <> compare c1 c2</span><span class="fragment" data-fragment-index="3"></span> -->
 
-<span class="fragment" data-fragment-index="4">insC :: Ord b => Whoopsie A b C -> Set (Whoopsie A b C) -> Set (Whoopsie A b C)
-insC = insert</span>
-</code></pre>
+<!-- <span class="fragment" data-fragment-index="4">insC :: Ord b => Whoopsie A b C -> Set (Whoopsie A b C) -> Set (Whoopsie A b C) -->
+<!-- insC = insert</span> -->
+<!-- </code></pre> -->
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">module Main where
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- <span class="fragment fade-in-then-semi-out">module Main where -->
 
-import Data.Set (Set, empty)
+<!-- import Data.Set (Set, empty) -->
 
-import FIA
-import FIB
-import FIC
+<!-- import FIA -->
+<!-- import FIB -->
+<!-- import FIC -->
 
-test :: Set (Whoopsie A B C)
-test =</span>
-  <span class="fragment">insB (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A2 B C) $ empty</span>
+<!-- test :: Set (Whoopsie A B C) -->
+<!-- test =</span> -->
+<!--   <span class="fragment">insB (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A1 B C) . </span><span class="fragment">insC (Whoopsie A2 B C) $ empty</span> -->
 
-<span class="fragment">main :: IO ()
-main =
-  print test</span>
-</code></pre>
+<!-- <span class="fragment">main :: IO () -->
+<!-- main = -->
+<!--   print test</span> -->
+<!-- </code></pre> -->
 
 ##
 
@@ -247,6 +239,41 @@ Linking whoopsie ...</span>
 fromList [</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">,Whoopsie A2 B C,</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">]</span><span class="fragment" data-fragment-index="5"></span>
 </code></pre>
 
+## `FlexibleContexts`
+
+::: {.left}
+Relax some of the requirements regarding contexts.
+:::
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+updateThing ::
+  MonadState MyState m
+  => m ()
+</code></pre>
+
+::: {.notes}
+- Requires FlexibleContexts because of the non type-variable argument to `MonadState`
+- Fairly common to specify concrete type for environment/state.
+:::
+
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+updateThing ::
+  ( HasThing s
+  , MonadState s m
+  )
+  => m ()
+</code></pre>
+
+::: {.notes}
+Counterpoint is that often this isn't necessary and we can add constraints, remain polymorphic,
+and maximise reuse.
+:::
+
+
 ## `FunctionalDependencies`
 
 ::: {.left}
@@ -256,13 +283,16 @@ Express dependent relationships between type variables for type classes with mul
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">class Monad m => MonadReader r m where
+<span class="fragment fade-semi-out" data-fragment-index="1">{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
+class Monad m => MonadReader r m where
   ask :: m r</span>
 
-<span class="fragment fade-in-then-semi-out">instance MonadReader r ((->) r) where
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">instance MonadReader r ((->) r) where
   ask = id</span>
 
-<span class="fragment">foo ::
+<span class="fragment" data-fragment-index="2">foo ::
   Integer
 foo =
   (+ 1) <$> ask $ 100</span>
@@ -277,20 +307,20 @@ foo =
 ##
 
 <pre class="no-highlight"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">type-class-extensions.lhs:275:13-16: error:
-    • </span><span class="fragment" data-fragment-index="1">Ambiguous type variable ‘t0’ arising from a use of ‘ask’
+<span class="fragment fade-semi-out" data-fragment-index="1">type-class-extensions.lhs:275:13-16: error:
+    • </span>Ambiguous type variable ‘t0’ arising from a use of ‘ask’
       prevents the constraint ‘(MonadReader
-                                  Integer ((->) t0))’ from being solved.</span>
-      <span class="fragment fade-in-then-semi-out" data-fragment-index="1">Probable fix: use a type annotation to specify what ‘t0’ should be.
+                                  Integer ((->) t0))’ from being solved.
+      <span class="fragment fade-semi-out" data-fragment-index="1">Probable fix: use a type annotation to specify what ‘t0’ should be.
       These potential instance exist:
         one instance involving out-of-scope types
         (use -fprint-potential-instances to see them all)
     • In the second argument of ‘(<$>)’, namely ‘ask’
       In the expression: (+ 1) <$> ask
       In the expression: (+ 1) <$> ask $ 100</span>
-    <span class="fragment" data-fragment-index="1">|
+    |
 275 |   (+ 1) <$> ask $ 100
-    |             ^^^</span><span class="fragment" data-fragment-index="2"></span>
+    |             ^^^
 </code></pre>
 
 ::: {.notes}
@@ -298,66 +328,65 @@ foo =
 - To make it clearer, what if I defined a new instance.
 :::
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out">{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GeneralisedNewtypeDeriving #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- <span class="fragment fade-in-then-semi-out">{-# LANGUAGE FlexibleInstances #-} -->
+<!-- {-# LANGUAGE GeneralisedNewtypeDeriving #-} -->
+<!-- {-# LANGUAGE MultiParamTypeClasses #-} -->
 
-module FunDeps where</span>
+<!-- module FunDeps where</span> -->
 
-<span class="fragment fade-in-then-semi-out">class Monad m => MonadReader r m where
-  ask :: m r
+<!-- <span class="fragment fade-in-then-semi-out">class Monad m => MonadReader r m where -->
+<!--   ask :: m r -->
 
-instance MonadReader r ((->) r) where
-  ask = id</span>
+<!-- instance MonadReader r ((->) r) where -->
+<!--   ask = id</span> -->
 
-<span class="fragment fade-in-then-semi-out">newtype Sinteger = Sinteger Integer
-  deriving (Eq, Show, Num, Ord, Real, Enum, Integral)</span>
+<!-- <span class="fragment fade-in-then-semi-out">newtype Sinteger = Sinteger Integer -->
+<!--   deriving (Eq, Show, Num, Ord, Real, Enum, Integral)</span> -->
 
-<span class="fragment fade-in-then-semi-out">instance MonadReader Integer ((->) Sinteger) where
-  ask (Sinteger n) = n + 1</span>
+<!-- <span class="fragment fade-in-then-semi-out">instance MonadReader Integer ((->) Sinteger) where -->
+<!--   ask (Sinteger n) = n + 1</span> -->
 
-<span class="fragment">foo ::
-  Integer
-foo =
-  (+ 1) <$> ask $ 41</span>
-</code></pre>
+<!-- <span class="fragment">foo :: -->
+<!--   Integer -->
+<!-- foo = -->
+<!--   (+ 1) <$> ask $ 41</span> -->
+<!-- </code></pre> -->
 
-##
+<!-- ## -->
 
-<pre class="haskell"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FunctionalDependencies #-}</span>
+<!-- <pre class="haskell"><code data-trim data-noescape> -->
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="1">{-# LANGUAGE FunctionalDependencies #-}</span> -->
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">class Monad m => MonadReader r m </span><span class="fragment" data-fragment-index="2">| m -> r </span><span class="fragment fade-in-then-semi-out" data-fragment-index="2">where
-  ask :: m r</span></span><span class="fragment" data-fragment-index="3"></span>
+<!-- <span class="fragment fade-in-then-semi-out" data-fragment-index="2">class Monad m => MonadReader r m </span><span class="fragment" data-fragment-index="2">| m -> r </span><span class="fragment fade-in-then-semi-out" data-fragment-index="2">where -->
+<!--   ask :: m r</span></span><span class="fragment" data-fragment-index="3"></span> -->
 
-<span class="fragment" data-fragment-index="4">instance MonadReader r ((->) r) where
-  ask = id</span>
+<!-- <span class="fragment" data-fragment-index="4">instance MonadReader r ((->) r) where -->
+<!--   ask = id</span> -->
 
-<span class="fragment" data-fragment-index="5">instance MonadReader Integer ((->) Sinteger) where
-  ask (Sinteger n) = n + 1</span>
-</code></pre>
+<!-- <span class="fragment" data-fragment-index="5">instance MonadReader Integer ((->) Sinteger) where -->
+<!--   ask (Sinteger n) = n + 1</span> -->
+<!-- </code></pre> -->
 
-##
+<!-- ## -->
 
-<pre class="no-highlight"><code data-trim data-noescape>
-FunDeps.hs:14:10: error:
-    <span style="color: red">Functional dependencies conflict between instance declarations:
-      instance MonadReader r ((->) r) -- Defined at FunDeps.hs:14:10
-      instance MonadReader Integer ((->) Sinteger)</span>
-        -- Defined at FunDeps.hs:20:10
-   |
-14 | instance MonadReader r ((->) r) where
-   |          ^^^^^^^^^^^^^^^^^^^^^^
-</code></pre>
+<!-- <pre class="no-highlight"><code data-trim data-noescape> -->
+<!-- FunDeps.hs:14:10: error: -->
+<!--     <span style="color: red">Functional dependencies conflict between instance declarations: -->
+<!--       instance MonadReader r ((->) r) -- Defined at FunDeps.hs:14:10 -->
+<!--       instance MonadReader Integer ((->) Sinteger)</span> -->
+<!--         -- Defined at FunDeps.hs:20:10 -->
+<!--    | -->
+<!-- 14 | instance MonadReader r ((->) r) where -->
+<!--    |          ^^^^^^^^^^^^^^^^^^^^^^ -->
+<!-- </code></pre> -->
 
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 <mark>{-# LANGUAGE FunctionalDependencies #-}</mark>
 
@@ -374,38 +403,4 @@ module FunDeps where
 foo =
   (+ 1) <$> ask $ 41</span>
 </code></pre>
-
-## `FlexibleContexts`
-
-::: {.left}
-Relax some of the requirements regarding contexts.
-:::
-
-##
-
-<pre class="no-highlight"><code data-trim data-noescape>
-updateThing ::
-  MonadState MyState m
-  => m ()
-</code></pre>
-
-::: {.notes}
-- Requires FlexibleContexts because of the non type-variable argument to `MonadState`
-- Fairly common to specify concrete type for environment/state.
-:::
-
-##
-
-<pre class="no-highlight"><code data-trim data-noescape>
-updateThing ::
-  ( HasThing s
-  , MonadState s m
-  )
-  => m ()
-</code></pre>
-
-::: {.notes}
-Counterpoint is that often this isn't necessary and we can add constraints, remain polymorphic,
-and maximise reuse.
-:::
 

@@ -98,7 +98,8 @@ class Coercible a b
 ##
 
 <pre><code class="haskell" data-trim data-noescape>
-<span class="fragment">{-# LANGUAGE GeneralisedNewtypeDeriving #-}</span>
+<span class="fragment"><mark>{-# LANGUAGE GeneralisedNewtypeDeriving #-}</mark></span>
+
 instance Pretty Int where
   pretty = pack . show
 
@@ -109,7 +110,9 @@ newtype Age = Age Int
 instance Coercible Age Int</span>
 
 <span class="fragment">instance Pretty Age where
-  pretty = coerce $ pack . show
+  pretty = coerce $ pack . show</span>
+  
+<span class="fragment">instance Coercible a b => Coercible (a -> c) (b -> c)</span>
 </code></pre>
 
 ## Roles
