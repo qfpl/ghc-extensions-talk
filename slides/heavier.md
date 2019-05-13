@@ -21,17 +21,17 @@ f ::
 ##
 
 <pre><code class="nohighlight" data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">Couldn't match type ‘a’ with ‘a1’
+<span class="fragment fade-semi-out" data-fragment-index="1">Couldn't match type ‘a’ with ‘a1’
 ‘a’ is a rigid type variable bound by
   the type signature for:</span>
-    <span class="fragment" data-fragment-index="1">f :: forall a. [a] -> [a]</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:(5,1)-(6,12)
+    f :: forall a. [a] -> [a]
+  <span class="fragment fade-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:(5,1)-(6,12)
 ‘a1’ is a rigid type variable bound by
   the type signature for:</span>
-    <span class="fragment" data-fragment-index="1">ys :: forall a1. [a1]</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:10:5-13
+    ys :: forall a1. [a1]
+  <span class="fragment fade-semi-out" data-fragment-index="1">at examples/ScopedTypeVariables.hs:10:5-13
 Expected type: [a1]
-  Actual type: [a]</span><span class="fragment" data-fragment-index="2"></span>
+  Actual type: [a]</span>
 </code></pre>
 
 ##
