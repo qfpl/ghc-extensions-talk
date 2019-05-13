@@ -102,6 +102,8 @@ Remove some of the boilerplate when bringing record fields into scope.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
+{-# LANGUAGE NamedFieldPuns #-}
+
 defaultConferenceAttendee ::
   Person
   -> ConferenceAttendee
@@ -117,6 +119,8 @@ defaultConferenceAttendee <span class="fragment" data-fragment-index="1">Person{
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
+{-# LANGUAGE NamedFieldPuns #-}
+
 personName ::
   Person
   -> Text
