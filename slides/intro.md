@@ -16,25 +16,25 @@ type-class-extensions.lhs:3:3: error:
  - I'm guilty too --- thought it was time to look at them in more detail.
 :::
 
-##
+<!-- ## -->
 
-```haskell
-{-# LANGUAGE ConstraintKinds       #-}
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE DeriveDataTypeable    #-}
-{-# LANGUAGE DeriveGeneric         #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE PolyKinds             #-}
-{-# LANGUAGE ScopedTypeVariables   #-}
-{-# LANGUAGE TupleSections         #-}
-{-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeOperators         #-}
-{-# LANGUAGE UndecidableInstances  #-}
-```
+<!-- ```haskell -->
+<!-- {-# LANGUAGE ConstraintKinds       #-} -->
+<!-- {-# LANGUAGE DataKinds             #-} -->
+<!-- {-# LANGUAGE DeriveDataTypeable    #-} -->
+<!-- {-# LANGUAGE DeriveGeneric         #-} -->
+<!-- {-# LANGUAGE FlexibleInstances     #-} -->
+<!-- {-# LANGUAGE MultiParamTypeClasses #-} -->
+<!-- {-# LANGUAGE OverloadedStrings     #-} -->
+<!-- {-# LANGUAGE PolyKinds             #-} -->
+<!-- {-# LANGUAGE ScopedTypeVariables   #-} -->
+<!-- {-# LANGUAGE TupleSections         #-} -->
+<!-- {-# LANGUAGE TypeFamilies          #-} -->
+<!-- {-# LANGUAGE TypeOperators         #-} -->
+<!-- {-# LANGUAGE UndecidableInstances  #-} -->
+<!-- ``` -->
 
-::: notes
- - Taken from `servant` --- `Servant.API.ContentTypes`
-:::
+<!-- ::: notes -->
+<!--  - Taken from `servant` --- `Servant.API.ContentTypes` -->
+<!-- ::: -->
 
