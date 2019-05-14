@@ -26,25 +26,11 @@ Might think of these as standard.
 
 ## Language extensions
 
-::: {class="left fragment fade-in-then-semi-out"}
-[Chapter 12](https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-18800012) of the Haskell 2010 report covers compiler pragmas.
-:::
-
-::: {class="left fragment fade-in-then-semi-out"}
+::: {class="left fragment"}
 [Section 12.3](https://www.haskell.org/onlinereport/haskell2010/haskellch12.html#x19-19100012.3) covers the `LANGUAGE` pragma, which is used for extensions.
 :::
 
-::: {class="left fragment fade-in-then-semi-out"}
-Support for language extensions is encouraged, but not required.
-:::
-
 ## Enabling extensions in GHC
-
-<!-- We're about to go through each of these in more detail --- cut to the chase -->
-<!-- - `{-# LANGUAGE #-}` pragmas -->
-<!-- - `default-extensions` field in a `.cabal` file -->
-<!-- - GHC flag -->
-<!-- - `:set -X` in GHC -->
 
 ##
 
