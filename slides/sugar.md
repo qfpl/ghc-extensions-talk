@@ -3,7 +3,7 @@
 ## `OverloadedStrings`
 
 ::: {class="left"}
-Enable overloaded string literals via the `IsString` type class.
+Enable overloaded string literals.
 :::
 
 ##
@@ -41,13 +41,13 @@ Allow partially applied tuple constructors.
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
-\x -> x * 2
+<span class="fragment fade-semi-out" data-fragment-index="1">\x -> x * 2</span>
 
-<span class="fragment fade-in-then-semi-out">(* 2)</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">(* 2)</span>
 
-<span class="fragment fade-in-then-semi-out">\x -> (x,True)</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">\x -> (x,True)</span>
 
-<span class="fragment fade-in-then-semi-out">(,True)</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">(,True)</span>
 </code></pre>
 
 ##
@@ -90,15 +90,15 @@ Adds syntactic sugar for pattern matching on a function's argument.
 
 ##
 
-<pre class="haskell"><code data-trim data-noescape>
+```haskell
 pretty ::
   -> Expr
   -> Text
-pretty <span class="fragment highlight-red">e = case e of</span>
+pretty e = case e of
   LitI n -> pack $ show n
   LitB True -> "true"
   LitB False -> "false"
-</code></pre>
+```
 
 ##
 
