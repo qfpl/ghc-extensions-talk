@@ -22,11 +22,7 @@ data Person =
   Person
   -> Text
 greetPerson </span><span class="fragment" data-fragment-index="1"><span class="fragment highlight-red" data-fragment-index="2"><span class="fragment fade-out no-layout" data-fragment-index="4">Person{firstName = firstName, surname = surname, height = height}</span></span></span><span class="fragment no-layout" style="color: red" data-fragment-index="4">Person{..}</span><span class="fragment fade-in-then-semi-out" data-fragment-index="1"> =
-  let
-    heightDescriptor = bool "short" "tall" $ height &:gt; 180
-  in
-       "Hi, " <> firstName <> " " <> surname <> ". Aren't you "
-    <> heightDescriptor <> "!"</span>
+  undefined</span>
 </code></pre>
 
 ##
@@ -34,25 +30,15 @@ greetPerson </span><span class="fragment" data-fragment-index="1"><span class="f
 <pre class="haskell"><code data-trim data-noescape>
 {-# LANGUAGE RecordWildCards   #-}
 
-data ConferenceAttendee =
-  ConferenceAttendee {
-    confFirstName :: Text
-  , confSurname   :: Text
-  , confHeight    :: Integer
-  , confShirtSize :: ShirtSize
-  }
-
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">defaultConferenceAttendee ::
+defaultPerson ::
   Person
-  -> ConferenceAttendee
-defaultConferenceAttendee Person{..} =
+defaultPerson =
   let
-    confFirstName = firstName
-    confSurname = surname
-    confHeight = height</span>
-    <span class="fragment" data-fragment-index="2">confShirtSize = M</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="1">in</span>
-    <span class="fragment" data-fragment-index="3">ConferenceAttendee {..}</span>
+    firstName = "Andrew"
+    surname = "McMiddlin"
+    height = 185
+  in
+    Person {..}
 </code></pre>
 
 ##
@@ -104,16 +90,11 @@ Remove some of the boilerplate when bringing record fields into scope.
 <pre class="haskell"><code data-trim data-noescape>
 {-# LANGUAGE NamedFieldPuns #-}
 
-defaultConferenceAttendee ::
+greetPerson ::
   Person
-  -> ConferenceAttendee
-defaultConferenceAttendee <span class="fragment" data-fragment-index="1">Person{firstName, surname, height}</span> =
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="2">ConferenceAttendee
-  { confFirstName = firstName
-  , confSurname = surname
-  , confHeight = height</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="3">, confShirtSize = M</span>
-  <span class="fragment fade-in-then-semi-out" data-fragment-index="2">}</span>
+  -> Text
+greetPerson <span class="fragment">Person{firstName, surname, height}</span> =
+  undefined
 </code></pre>
 
 ##
@@ -121,11 +102,11 @@ defaultConferenceAttendee <span class="fragment" data-fragment-index="1">Person{
 <pre class="haskell"><code data-trim data-noescape>
 {-# LANGUAGE NamedFieldPuns #-}
 
-personName ::
+greetPerson ::
   Person
   -> Text
-personName Person{firstName, surname} =
-  firstName <> " " <> surname
+greetPerson Person{firstName, surname} =
+  undefined
 </code></pre>
 
 ##
