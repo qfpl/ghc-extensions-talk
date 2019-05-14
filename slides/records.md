@@ -109,11 +109,3 @@ greetPerson Person{firstName, surname} =
   undefined
 </code></pre>
 
-##
-
-::: {.left}
-Improvements
-
- - Only bring into scope what we need.
- - Clear where fields come from.
-:::

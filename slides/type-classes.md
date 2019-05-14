@@ -27,6 +27,11 @@ To summarise, it says that a type class declaration must have the following form
 </ul>
 :::
 
+:::{.notes}
+- Context specifies superclasses.
+- Context can only mention the class variable.
+:::
+
 ##
 
 <pre class="haskell"><code data-trim data-noescape>
