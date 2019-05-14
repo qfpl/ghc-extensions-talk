@@ -1,4 +1,4 @@
-# Records
+# Records {data-background="images/records.jpg"}
 
 ## `RecordWildCards`
 
