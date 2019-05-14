@@ -100,11 +100,17 @@ Relaxes the rules for valid type class instances.
 
 ##
 
-<pre class="haskell"><code data-trim data-noescape>
-class Monad m => MonadReader r m where
-  ask :: m r
+- Instance types can be type variables.
+- Type variables can appear multiple times in the instance head.
+- Concrete types may be used as parameters to instance types.
 
-<span class="fragment">instance MonadReader r ((->) r) where
+##
+
+<pre class="haskell"><code data-trim data-noescape>
+<span class="fragment fade-semi-out" data-fragment-index="1">class Monad m => MonadReader r m where
+  ask :: m r</span>
+
+<span class="fragment" data-fragment-index="1">instance MonadReader r ((->) r) where
   ask = id
 </code></pre>
 
@@ -225,18 +231,18 @@ instance Twizzle (Maybe Integer) where
 ##
 
 <pre class="no-highlight"><code data-trim data-noescape>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="1">$ ghc --version
+<span class="fragment fade-semi-out" data-fragment-index="1">$ ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.4.4</span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="2">$ ghc -Wall -fforce-recomp Main.hs -o whoopsie</span>
-<span class="fragment fade-in-then-semi-out" data-fragment-index="3">[1 of 4] Compiling FIA              ( FIA.hs, FIA.o )
+<span class="fragment fade-in-then-semi-out" data-fragment-index="1">$ ghc -Wall -fforce-recomp Main.hs -o whoopsie</span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="2">[1 of 4] Compiling FIA              ( FIA.hs, FIA.o )
 [2 of 4] Compiling FIB              ( FIB.hs, FIB.o )
 [3 of 4] Compiling FIC              ( FIC.hs, FIC.o )
 [4 of 4] Compiling Main             ( Main.hs, Main.o )
 Linking whoopsie ...</span>
 
-<span class="fragment fade-in-then-semi-out" data-fragment-index="4">> ./whoopsie
-fromList [</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">,Whoopsie A2 B C,</span><span class="fragment" data-fragment-index="4">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="4">]</span><span class="fragment" data-fragment-index="5"></span>
+<span class="fragment fade-in-then-semi-out" data-fragment-index="3">> ./whoopsie
+fromList [</span><span class="fragment" data-fragment-index="3">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="3">,Whoopsie A2 B C,</span><span class="fragment" data-fragment-index="3">Whoopsie A1 B C</span><span class="fragment fade-in-then-semi-out" data-fragment-index="3">]</span><span class="fragment" data-fragment-index="5"></span>
 </code></pre>
 
 ## `FlexibleContexts`
@@ -295,7 +301,7 @@ class Monad m => MonadReader r m where
 <span class="fragment" data-fragment-index="2">foo ::
   Integer
 foo =
-  (+ 1) <$> ask $ 100</span>
+  (+ 1) <$> ask $ 41</span>
 </code></pre>
 
 ::: {.notes}
@@ -319,7 +325,7 @@ foo =
       In the expression: (+ 1) <$> ask
       In the expression: (+ 1) <$> ask $ 100</span>
     |
-275 |   (+ 1) <$> ask $ 100
+275 |   (+ 1) <$> ask $ 41
     |             ^^^
 </code></pre>
 
@@ -389,8 +395,6 @@ foo =
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 <mark>{-# LANGUAGE FunctionalDependencies #-}</mark>
-
-module FunDeps where
 
 <span class="fragment fade-in-then-semi-out" data-fragment-index="1">class Monad m => MonadReader r m</span> <span class="fragment" data-fragment-index="1">| m -> r </span><span class="fragment fade-in-then-semi-out" data-fragment-index="1">where
   ask :: m r</span><span class="fragment" data-fragment-index="2"></span>

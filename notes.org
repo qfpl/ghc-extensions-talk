@@ -55,3 +55,4 @@
 
 *** [[https://gitlab.haskell.org/ghc/ghc/wikis/roles2#join][roles2 on GHC wiki]]
 *** [[http://web.cecs.pdx.edu/~mpj/pubs/fundeps-esop2000.pdf][type classes with functional dependencies paper]]
+*** [[https://www.microsoft.com/en-us/research/wp-content/uploads/1997/01/multi.pdf][type classes design space paper]]
