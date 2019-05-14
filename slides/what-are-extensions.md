@@ -1,4 +1,4 @@
-# Language extensions 101
+# Language extensions 101 {data-background="images/extensions.png"}
 
 ## Haskell 2010
 
