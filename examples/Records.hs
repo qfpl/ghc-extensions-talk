@@ -13,8 +13,17 @@ data Person =
     firstName :: Text
   , surname   :: Text
   , height    :: Integer
-  , age       :: Integer
   }
+  deriving (Show)
+
+def :: Person
+def =
+  let
+    firstName = "Andrew"
+    surname = "McMiddlin"
+    height = 185
+  in
+    Person {..}
 
 data ShirtSize =
   XS

@@ -24,3 +24,6 @@ class (Functor t, Foldable t) => Traversable' t where
 instance (Traversable' f, Traversable' g) => Traversable' (Compose f g) where
   traverse' :: (a -> h b) -> Compose f g a -> h (Compose f g b)
   traverse' = undefined
+
+instance (Eq a, Eq b) => Eq ((->) a b) where
+  f == g = undefined

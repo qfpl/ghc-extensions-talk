@@ -2,6 +2,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeFamilies #-}
 
@@ -9,6 +10,7 @@ module GND where
 
 import Control.Applicative (Applicative)
 import Data.Set
+import Data.String (IsString (..))
 import Data.Text (Text, pack)
 
 -- data family Z :: * -> *
@@ -111,3 +113,9 @@ type family Fam a where
 
 data Quux a b c =
   Quux a b c
+
+data Boo = Boo Int | Nah
+
+instance IsString Boo where
+  fromString "42" = Boo 42
+  fromString _ = Nah
