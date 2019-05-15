@@ -14,6 +14,9 @@
 
 **Putting `join` in `Monad`**  
 [https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/](https://ryanglscott.github.io/2018/03/04/how-quantifiedconstraints-can-let-us-put-join-back-in-monad/)
+
+**`FlexibleInstances` breaking `Data.Set`**  
+[https://gist.github.com/rwbarton/dd8e51dce2a262d17a80](https://gist.github.com/rwbarton/dd8e51dce2a262d17a80)
 :::
 
 ## Images
