@@ -20,7 +20,7 @@
 
 ::: {.left}
 **Muhammad Ali**  
-[https://commons.wikimedia.org/wiki/File:Muhammad_Ali_1966.jpg](https://commons.wikimedia.org/wiki/File:Muhammad_Ali_1966.jpg**
+[https://commons.wikimedia.org/wiki/File:Muhammad_Ali_1966.jpg](https://commons.wikimedia.org/wiki/File:Muhammad_Ali_1966.jpg)
 
 **Records**  
 [https://flic.kr/p/8fsrnG](https://flic.kr/p/8fsrnG)
